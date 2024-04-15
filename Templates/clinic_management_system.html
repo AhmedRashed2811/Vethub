@@ -1,0 +1,628 @@
+{% load static %}
+
+<!-- appointments.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Management System</title>
+    <style>
+        /* CSS styles for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .status-button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        .status-button.pending {
+            background-color: rgb(22, 169, 88);
+        }
+        .status-button.ongoing {
+            background-color: orange;
+        }
+        .status-button.done {
+            background-color: green;
+        }
+        .status-button.cancel {
+            background-color: red;
+        }
+
+        /* styles.css */
+
+        /* Add your existing styles here */
+
+        .appointment-management {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 400px; /* Adjust the maximum width as needed */
+        }
+
+        .appointment-management h2 {
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+
+        .appointment-management .status-form2 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .appointment-management .form-group {
+            margin-bottom: 10px;
+        }
+
+        .appointment-management label {
+            margin-bottom: 5px;
+        }
+
+        .appointment-management input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .appointment-management button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .appointment-management button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        
+        /* CSS styles for the table and modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #aaa;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            text-decoration: none;
+            background-color: #f44336; /* Red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s; /* Transition for background color and box shadow */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add box shadow for glow effect */
+        }
+
+        .cancel-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Glow effect on hover */
+        }
+
+        .modal-buttons {
+            text-align: center;
+        }
+
+
+
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        .success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+
+        .warning {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+
+        .offer-forms-container {
+            display: flex;
+            align-items: center; /* Align items vertically in the center */
+        }
+
+        .offer-forms-container form {
+            margin-right: 10px; /* Adjust as needed */
+        }
+
+        #final_offer {
+            font-weight: bold;
+            margin-right: 10px; /* Adjust as needed */
+        }
+
+        #current_offer {
+            display: none; /* Hide the current offer */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="messages">
+        {% for message in messages %}
+            <p class="message {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    
+    <h1>Clinic Management System</h1>
+    <h2>All Appointments</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Source</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in doctor_appointments %}
+            <tr>
+
+                {% if appointment.offline_customer_name %}
+                    <td>{{ appointment.offline_customer_name}}</td>
+                {% else %}
+                    <td>{{ appointment.customer.user.name }}</td>
+                {% endif %}
+
+                {% if appointment.offline_customer_phone %}
+                    <td>{{ appointment.offline_customer_phone}}</td>
+                {% else %}
+                    <td>{{ appointment.customer.user.phone_number }}</td>
+                {% endif %}
+
+                {% if appointment.offline_customer_phone %}
+                    <td>Offline</td>
+                {% else %}
+                    <td>Online</td>
+                {% endif %}
+                
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td id="status-{{ appointment.id }}">{{ appointment.status }}</td>
+                <td>
+                    {% if appointment.status == 'Pending' %}
+                    <form id="status-form6" action="{% url 'update_status' appointment.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden"  name="new_status" value="On-Going">
+                        <button type="submit" class="status-button pending" onclick="refreshPage2()">Start</button>
+                    </form>
+                    {% endif %}
+
+                    {% if appointment.status == 'On-Going' %}
+                    <form id="status-form" class="status-form3" action="{% url 'update_status' appointment.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="new_status" value="Done">
+                        <button type="submit" class="status-button ongoing" onclick="refreshPage()">Finish</button>
+                    </form>
+                    {% endif %}
+
+                    {% if appointment.status == 'Pending' %}
+                    <form action="{% url 'cancel_appointment' appointment.id %}" method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="button" class="cancel-button" data-modal-id="modal-{{ appointment.id }}">Cancel</button>
+                        <!-- Modal -->
+                        <div id="modal-{{ appointment.id }}" class="modal">
+                            <div class="modal-content">
+                                <span class="close" data-modal-id="modal-{{ appointment.id }}">&times;</span>
+                                <p>Are you sure you want to cancel this appointment?</p>
+                                <div class="modal-buttons">
+                                    <button type="submit" class="cancel-button">Yes, Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </td>
+
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Appointment Management System</h2>
+
+    <div class="appointment-management">
+        <form class="status-form2" method="post" action="{% url 'offline_appointment' %}" >
+            {% csrf_token %}
+    
+            <label for="offline_customer_name">Name:</label>
+            <input type="text" name="offline_customer_name">
+    
+            <label for="offline_customer_phone">Phone:</label>
+            <input type="text" name="offline_customer_phone">
+            
+            
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date">
+            
+            <label for="time">Time:</label>
+            <input type="text" id="time" name="time">
+            
+            <button type="submit">Make Appointment</button>
+        </form>
+    </div>
+    
+
+    <h2>Make Offer</h2>
+
+    <div class="offer-forms-container">
+
+        {% if not request.user.doctor.offer_percentage == 0.0 %}
+            Current Offer:<span id="final_offer"> </span>
+            <p style="display: none;" id="current_offer">{{request.user.doctor.offer_percentage }}</p>
+        {% endif %}
+
+        <form class="create_offer_form" method="post" action="{% url 'make_offer' %}" >
+            {% csrf_token %}
+            <label for="percentage">Percentage:</label>
+            <input type="number" step="0.01" name="percentage">
+    
+            <label for="end_date">Date:</label>
+            <input type="date" name="end_date">
+    
+            <button type="submit">Create Offer</button>
+        </form>
+    
+        {% if not request.user.doctor.offer_percentage == 0.0 %}
+            <form class="delete_offer_form" method="post" action="{% url 'delete_offer' %}" >
+                {% csrf_token %}
+                <button type="submit" style="background-color: red;">Delete Offer</button>
+            </form>
+        {% endif %}
+    </div>
+
+
+    <script>
+        // Get all cancel buttons and modal close buttons
+        var cancelButtons = document.querySelectorAll('.cancel-button');
+        var closeButton = document.querySelectorAll('.close');
+        try{
+            var offer = document.getElementById("current_offer").innerHTML
+            document.getElementById("final_offer").innerHTML = `${offer * 100}%`
+        }
+        catch{
+
+        }
+        
+
+        // Add click event listener to each cancel button
+        cancelButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var modalId = button.getAttribute('data-modal-id');
+                var modal = document.getElementById(modalId);
+                modal.style.display = "block";
+            });
+        });
+
+        // Add click event listener to each modal close button
+        closeButton.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var modalId = button.getAttribute('data-modal-id');
+                var modal = document.getElementById(modalId);
+                modal.style.display = "none";
+            });
+        });
+
+        // Close the modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            var modals = document.querySelectorAll('.modal');
+            modals.forEach(function(modal) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+
+        function refreshPage() {
+
+            // Get all form elements with the 'status-form' class
+            var form = document.getElementById('status-form');
+            // Add an event listener for form submissions
+
+            form.addEventListener('submit', function(event) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+
+                // Get the form's action URL
+                var actionUrl = form.getAttribute('action');
+
+                // Create a new FormData object containing form data
+                var formData = new FormData(form);
+
+                // Send a POST request to the server
+                fetch(actionUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    // Check if the response indicates success
+                    if (response.ok) {
+                        // Refresh the page
+                        window.location.reload();
+                    } else {
+                        // Handle errors or non-successful responses
+                        console.error('Failed to update status');
+                    }
+                })
+                .catch(function(error) {
+                    // Handle network errors or other issues
+                    console.error('Error:', error);
+                });
+            });
+    };
+
+
+
+    function refreshPage2() {
+
+            // Get all form elements with the 'status-form' class
+            var form = document.getElementById('status-form6');
+            // Add an event listener for form submissions
+
+            form.addEventListener('submit', function(event) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+
+                // Get the form's action URL
+                var actionUrl = form.getAttribute('action');
+
+                // Create a new FormData object containing form data
+                var formData = new FormData(form);
+
+                // Send a POST request to the server
+                fetch(actionUrl, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    // Check if the response indicates success
+                    if (response.ok) {
+                        // Refresh the page
+                        window.location.reload();
+                    } else {
+                        // Handle errors or non-successful responses
+                        console.error('Failed to update status');
+                    }
+                })
+                .catch(function(error) {
+                    // Handle network errors or other issues
+                    console.error('Error:', error);
+                });
+            });
+        };
+
+
+
+        // Assuming this script is included in your HTML file
+        // and is executed after the page has loaded
+        
+        
+
+
+
+        // Assuming this script is included in your HTML file
+        // and is executed after the page has loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all form elements with the 'status-form' class
+            var statusForms = document.querySelectorAll('.status-form4');
+
+            // Add an event listener for form submissions
+            statusForms.forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
+
+                    // Get the form's action URL
+                    var actionUrl = form.getAttribute('action');
+
+                    // Create a new FormData object containing form data
+                    var formData = new FormData(form);
+
+                    // Send a POST request to the server
+                    fetch(actionUrl, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(function(response) {
+                        // Check if the response indicates success
+                        if (response.ok) {
+                            // Refresh the page
+                            window.location.reload();
+                        } else {
+                            // Handle errors or non-successful responses
+                            console.error('Failed to update status');
+                        }
+                    })
+                    .catch(function(error) {
+                        // Handle network errors or other issues
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        });
+
+
+        // Assuming this script is included in your HTML file
+        // and is executed after the page has loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all form elements with the 'status-form' class
+            var statusForms = document.querySelectorAll('.status-form2');
+
+            // Add an event listener for form submissions
+            statusForms.forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
+
+                    // Get the form's action URL
+                    var actionUrl = form.getAttribute('action');
+
+                    // Create a new FormData object containing form data
+                    var formData = new FormData(form);
+
+                    // Send a POST request to the server
+                    fetch(actionUrl, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(function(response) {
+                        // Check if the response indicates success
+                        if (response.ok) {
+                            // Refresh the page
+                            window.location.reload();
+                        } else {
+                            // Handle errors or non-successful responses
+                            console.error('Failed to update status');
+                        }
+                    })
+                    .catch(function(error) {
+                        // Handle network errors or other issues
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        });
+
+        // Assuming this script is included in your HTML file
+        // and is executed after the page has loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all form elements with the 'status-form' class
+            var statusForms = document.querySelectorAll('.delete_offer_form');
+
+            // Add an event listener for form submissions
+            statusForms.forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    // Prevent the default form submission behavior
+                    event.preventDefault();
+
+                    // Get the form's action URL
+                    var actionUrl = form.getAttribute('action');
+
+                    // Create a new FormData object containing form data
+                    var formData = new FormData(form);
+
+                    // Send a POST request to the server
+                    fetch(actionUrl, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(function(response) {
+                        // Check if the response indicates success
+                        if (response.ok) {
+                            // Refresh the page
+                            window.location.reload();
+                        } else {
+                            // Handle errors or non-successful responses
+                            console.error('Failed to update status');
+                        }
+                    })
+                    .catch(function(error) {
+                        // Handle network errors or other issues
+                        console.error('Error:', error);
+                    });
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>

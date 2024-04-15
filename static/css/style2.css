@@ -1,0 +1,1930 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter",sans-serif;
+    font-size: 16px;
+}
+.Authentication-page{
+    min-height: 100vh;
+    background: #3CBA92;
+}
+.Authentication-page::after{
+    content: "";
+    position: absolute;
+    width: 225.76px;
+    height: 248.53px;
+    right: -58px;
+    top: -59px;
+    border-radius: 50%;
+    background: rgba(1, 152, 116, 0.6);
+}
+.Authentication-page::before{
+    content: "";
+    position: absolute;
+    width: 225.76px;
+    height: 248.53px;
+    right: -34px;
+    top: -26.53px;
+    border-radius: 50%;
+    background: rgba(1, 152, 116, 0.38);
+
+}
+.Authentication-page .container .Section-1{
+    background-color: #019874;
+    color: #fff;
+    border-radius: 20px 0 0 20px;
+    display: block;
+}
+.Authentication-page .container .Section-1 h2{
+    font-size: 30px;
+    font-weight: 400;
+}
+.Authentication-page .container .Section-1 .img{
+    /* width: 524px; */
+    /* height: 312px; */
+    background: #D9D9D9;
+    border-radius: 8px;
+}
+.Authentication-page .container .Section-1 h3{
+    font-size: 22px;
+    font-weight: bold;
+    padding: 0 1rem 0 0;
+    margin: 0;
+}
+.Authentication-page .container .Section-1 button{
+    background: #c6c7c8;
+    border: 1px solid #c6c7c8;
+    color: #000;
+    margin: 0;
+    transition: 0.5s;
+}
+.Authentication-page .container .Section-1 button:hover{
+    background: #a1a2a3;
+    border: 1px solid #a1a2a3;
+}
+.Authentication-page .container .Section-2{
+    background: #fff;
+    border-radius: 0 20px 20px 0;
+}
+.Authentication-page .container .Section-2 h3{
+    font-size: 35px;
+    font-weight: bold;
+}
+.Authentication-page .container .Section-2 form label{
+    font-size: 20px;
+    padding-right: 10px;
+}
+.Authentication-page .container .Section-2 .forget{
+    cursor: pointer;
+    margin-left: 0 !important;
+    transition: 0.5s;
+    text-decoration: none;
+}
+.Authentication-page .container .Section-2 .forget:hover{
+    color: #019874;
+}
+.Authentication-page .container .Section-2 button{
+    background-color: rgba(1, 152, 116, 0.8157) !important;
+    transition: 0.5s;
+}
+.Authentication-page .container .Section-2 button:hover{
+    background-color: #019874 !important;
+}
+
+/* Sign Up */
+.Authentication-page .container .Section-2 .chooseSignUp{
+    box-sizing: border-box;
+    width: 150px;
+    height: 165.57px;
+    background: #FFFFFF;
+    border: 1px solid #AFD3FF;
+    box-shadow: 0px 4px 4px #E6EEF8;
+    border-radius: 50px;
+    transition: 0.5s;
+    cursor: pointer;
+}
+.Authentication-page .container .Section-2 .chooseSignUp:hover{
+    box-sizing: border-box;
+    width: 150px;
+    height: 165.57px;
+    background: #FFFFFF;
+    border: 1px solid #E6EEF8;
+    box-shadow: 0px 10px 38px #8FBFFC;
+    border-radius: 50px;
+}
+.Authentication-page .container .Section-2 .chooseSignUp img{
+    width: 100px;
+    height: 100px;
+}
+.Authentication-page .container .Section-2 .chooseSignUp h4{
+    font-family: 'Public Sans', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.Authentication-page .container .Section-2 form .SignUp-lable, .Authentication-page .container .Section-2 form .SignUp-lable-F1{
+    font-size: 16px;
+    color: #676a6c;
+    width: 22%;
+}
+.Authentication-page .container .Section-2 form .SignUp-lable-F1{
+    width: 22%;
+}
+.Authentication-page .container .Section-2 form .form-control{
+    background-color: #ffffff8a;
+    border: 1px solid #18a68952;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857143;
+}
+.Authentication-page .container .Section-2 form .form-control:focus{
+    box-shadow: 0 0 0 0.2rem rgba(1, 152, 116,.25);
+}
+
+/* Sign Up Doctor F1 */
+
+.Authentication-page .container .Section-2 form .gender-details .gender-title{
+    font-size: 20px;
+    font-weight: 500;
+}
+.Authentication-page .container .Section-2 form .category{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+.Authentication-page .container .Section-2 form .category label{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding-right: 25px;
+}
+.Authentication-page .container .Section-2 form .category label .dot{
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background: #d9d9d9;
+    border: 5px solid transparent;
+    transition: all 0.3s ease;
+}
+#dot-1:checked ~ .category label .one,
+#dot-2:checked ~ .category label .two{
+    background: #019874;
+    border-color: #d9d9d9;
+}
+.Authentication-page .container .Section-2 form input[type="radio"]{
+    display: none;
+}
+
+/* Sign Up Doctor F2 */
+.Authentication-page .container .Section-2 form .tb-container {
+    width: 100%;
+    margin: 5px 0;
+}
+.Authentication-page .container .Section-2 form .tb-container img {
+    width: 200px;
+    height: auto;
+    display: none;
+    margin-bottom: 30px;
+}
+.Authentication-page .container .Section-2 form .tb-container input {
+    display: none;
+}
+.Authentication-page .container .Section-2 form .tb-container label {
+    width: 116px;
+    height: 71px;
+    background: #ADB5BD;
+    color: #ffffff;
+    font-size: 15px;
+    text-transform: capitalize;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: end;
+    padding: 6px;
+    justify-content: center;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+.Authentication-page .container .Section-2 form .tb-container label .image{
+    content: "";
+    position: absolute;
+    width: 56px;
+    height: 43px;
+    left: 30px;
+    top: 4px;
+    background: url(../imgs/Upload.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 8px;
+
+}
+
+/* Sign Up Doctor F3 */
+.Authentication-page .container .Section-2 form .UrgentExamination{
+    width: 30%;
+}
+.Authentication-page .container .Section-2 form .Price{
+    padding-right: 1rem;
+    font-size: 16px;
+    color: #676a6c;
+}
+.Authentication-page .container .Section-2 form textarea{
+    /* resize: none; */
+    min-height: 100px;
+}
+
+/* NavBar */
+.navbar{
+    background-color: #D9D9D9;
+}
+.navbar .container .navbar-brand img{
+    width: 45px;
+    height: 47.86px;
+}
+.navbar .container .navbar-brand h1, .navbar .container .navbar-brand h1 span{
+    /* width: 134px;
+    height: 38px; */
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 38px;
+    letter-spacing: 0.1em;
+    color: #019874;
+}
+.navbar .container .navbar-brand h1 span{
+    color: #333333;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding: 2px 2px;
+    margin: 6px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.navbar-nav .nav-link.active, .navbar-expand-lg .navbar-nav .nav-link:hover{
+    color: #3CBA92;
+}
+.navbar .container .nav-item .flag{
+    width: 60px;
+    height: 35px;
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.navbar .container .nav-item .flag .flagHover, .navbar .container .nav-item .BillFather .BillHover{
+    transition: 0.5s;
+}
+.navbar .container .nav-item .flag:hover .flagHover{
+    fill: white;
+}
+.navbar .container .nav-item .BillFather{
+    padding: 0px 5px;
+    margin: 0;
+}
+.BillColor{
+    fill: #ffbb00;
+}
+.navbar .container .nav-item .BillFather:hover .BillHover{
+    fill: #ffbb00;
+}
+.navbar .container .nav-item .BillFather .badge{
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #E40909;
+}
+/* Notification */
+.show{
+    display: none;
+}
+.navbar .container .nav-item .Notification{
+    width: 468px;
+    height: 498px;
+    right: -38px;
+    top: calc(100% + 40px);
+    background: #F8F8F8;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.navbar .container .nav-item .Notification::before{
+    content: "";
+    width: 25px;
+    height: 25px;
+    background-image: url(../imgs/arrow.png);
+    position: absolute;
+    right: 44px;
+    top: -21px;
+}
+.navbar .container .nav-item .Notification::after{
+    content: "";
+    width: 50px;
+    height: 5px;
+    background: #F8F8F8;
+    position: absolute;
+    right: 38px;
+    top: 0.8px;
+}
+.navbar .container .nav-item .Notification h3{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: #2E2E2E;
+}
+.navbar .container .nav-item .Notification .scroll-div{
+    width: 100%;
+    height: 431px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.navbar .container .nav-item .Notification .notificate{
+    width: 98%;
+    height: 79px;
+    background: #D9D9D9;
+    border-radius: 8px;
+    padding: 4px;
+}
+.navbar .container .nav-item .Notification .notificate h4{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    color: #808184;
+    margin: 0;
+}
+.navbar .container .nav-item .Notification .notificate p{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 12px;
+    color: #333333;
+    margin: 0;
+    padding-top: 3px;
+}
+.navbar .container .nav-item .Notification .notificate .date h5{
+font-family: 'Inter';
+font-style: normal;
+font-weight: 600;
+font-size: 11px;
+line-height: 13px;
+text-align: right;
+color: #019874;
+}
+.navbar .container .nav-item .Notification .notificate .OpenForm{
+    padding-bottom: 4px;
+}
+.navbar .container .nav-item .Notification .notificate .OpenForm button{
+    width: 174px;
+    height: 28px;
+    background: #019874;
+    border: 1px solid #019874;
+    border-radius: 50px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 12px;
+    text-align: center;
+    color: #FFFFFF;
+    transition: 0.5s;
+}
+.navbar .container .nav-item .Notification .notificate .OpenForm button:hover{
+    background: #00644C;
+}
+.navbar .container .logout {
+    width: 106px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: #019874;
+    border-radius: 10px;
+    font-family: 'Raleway',sans-serif;
+    transition: 0.5s;
+}
+.navbar .container .logout:hover{
+    color: #fff;
+    background-color: #00644C;
+}
+
+/* Home Section */
+.home{
+    background-color: #F8F8F8;
+    min-height: 100vh;
+    padding: 6rem 0 0 0;
+    box-sizing: border-box;
+}
+.home .container .row h3{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 70px;
+    color: #000000;
+}
+.home .container .row p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 33px;
+    color: #000000;
+    padding-top: 25px;
+}
+
+/* Doctors Section */
+.doctors{
+    min-height: 100vh;
+    padding-top: 80px;
+}
+.doctors .container .Filter{
+    display: flex;
+}
+.doctors .container .Filter .dropdown-toggle::after{
+    margin-left: 4px;
+    vertical-align: 0px;
+}
+.doctors .container .Filter .cityFilter, .doctors .container .Filter .areaFilter, .doctors .container .Filter .urgentFilter{
+    width: 173px;
+    height: 76px;
+    background: transparent;
+    border: 0.5px solid #C4C4C4;
+    border-radius: 8px 0px 0px 8px;
+    font-size: 25px;
+    color: #D9D9D9;
+}
+.doctors .container .Filter .cityFilter span, .doctors .container .Filter .areaFilter span, .doctors .container .Filter .urgentFilter span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #019874;
+    padding: 0 3px;
+}
+.doctors .container .Filter .areaFilter{
+    width: 174px;
+    height: 76px;
+    border-radius: 0;
+}
+.doctors .container .Filter .urgentFilter{
+    width: 228px;
+    height: 76px;
+    border-radius: 0;
+}
+.doctors .container .Filter .urgentFilter i{
+    font-size: 24px;
+    padding: 0 6px 0 0;
+    color: #000;
+}
+.doctors .container .Filter .Search{
+    width: 158px;
+    height: 76px;
+    background: #019874;
+    border-radius: 0px 8px 8px 0px;
+    border: none;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+.doctors .container .Filter .Search i{
+    font-size: 22px;
+}
+.doctors .container .head h2{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: #808184;
+    padding-right: 10px;
+}
+.doctors .container .head p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ADB5BD;
+}
+.doctors .container .form-control{
+    width: 100%;
+    height: 45px;
+    background: #FFFFFF;
+    border: 0.5px solid #C4C4C4;
+    box-shadow: 0px 0px 10px rgba(204, 204, 204, 0.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    position: relative;
+    appearance: auto;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #019874;
+}
+.doctors .container .form-control:focus{
+    border-color: #019874;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(1, 152, 116,.25);
+}
+.doctors .container .form-group label{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ADB5BD;
+    padding-right: 10px;
+}
+.doctors .container .allDoctors{
+    background: #D9D9D9;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.doctors .container .allDoctors .photo{
+    width: 151.17px;
+    height: 151.17px;
+    background:#D9D9D9;
+    border: 4px solid #019874;
+    border-radius: 200px;
+}
+.doctors .container .allDoctors .information h3{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: #808184;
+}
+.doctors .container .allDoctors .information .Rating span, .doctorDetails .doctorInformation .details .Rating span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #4D3208;
+}
+.doctors .container .allDoctors .information .Rating .stars i, .doctorDetails .doctorInformation .details .Rating .stars i{
+    font-size: 18px;
+}
+.checked {
+    color: orange;
+}
+.doctors .container .allDoctors .location, .doctorDetails .doctorInformation .details .location{
+    cursor: pointer;
+    width: fit-content;
+}
+.doctors .container .allDoctors .location i, .doctorDetails .doctorInformation .details .location i{
+    color: rgba(1, 101, 252, 0.78);
+    font-size: 22px;
+}
+.doctors .container .allDoctors .location h6, .doctorDetails .doctorInformation .details .location h6{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #000000;
+    margin: 0 0 0 5px;
+    transition: 0.5s;
+}
+.doctors .container .allDoctors .location:hover h6, .doctorDetails .doctorInformation .details .location:hover h6{
+    color: #019874;
+}
+.doctors .container .allDoctors .description{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 33px;
+    color: #000000;
+}
+.doctors .container .allDoctors h4{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #019874;
+}
+.doctors .container .allDoctors .Chat, .doctorDetails .doctorInformation .details .Chat{
+    width: 188px;
+    height: 39px;
+    background: #019874;
+    border-radius: 10px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: 0.5s;
+}
+.doctors .container .allDoctors .Chat:hover, .doctorDetails .doctorInformation .details .Chat:hover{
+    background: #00644C;
+}
+
+/* News Section */
+.News{
+    background-color: #F8F8F8;
+    padding: 30px 0 30px 0;
+}
+.container-sm{
+    max-width: 1140px;
+}
+.News h2{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 27px;
+    color: #808184;
+}
+.News .allNews .oneNews{
+    width: 317px;
+    height: 324px;
+    background: #FFFFFF;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    padding: 20px;
+}
+.News .allNews .oneNews h3{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    color: #ADB5BD;
+}
+.News .allNews .oneNews p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+}
+.News .allNews .oneNews img{
+    width: 277px;
+    height: 179px;
+    background: #D9D9D9;
+    border-radius: 8px;
+}
+
+/* Footer Section */
+footer{
+    background-color: #019874;
+}
+footer .twoSections{
+    width: 75%;
+}
+footer .twoSections .sectionOne{
+    width: 45%;
+}
+footer .twoSections .sectionOne img{
+    width: 60px;
+    height: 62.86px;
+}
+footer .twoSections .sectionOne h1, footer .twoSections .sectionOne span{
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 38px;
+    letter-spacing: 0.1em;
+    color: #fff;
+}
+footer .twoSections .sectionOne span{
+    color: #333333;
+}
+footer .twoSections .sectionOne p, footer .twoSections .sectionTwo p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 33px;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+footer .twoSections .sectionOne .socialMedia h3, footer .twoSections .sectionTwo h3, footer .sectionThree h3{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    text-align: center;
+    color: #FFFFFF;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 5px;
+}
+footer .twoSections .sectionOne .socialMedia .socialLinks a img{
+    filter: grayscale(.7);
+    width: 30px;
+    height: 30px;
+    transition: 0.5s;
+}
+footer .twoSections .sectionOne .socialMedia .socialLinks a i {
+    font-size: 30px;
+    color: #00ACED;
+    filter: grayscale(.7);
+    transition: 0.5s;
+}
+footer .twoSections .sectionOne .socialMedia .socialLinks a:hover img, footer .twoSections .sectionOne .socialMedia .socialLinks a:hover i{
+    filter: grayscale(0);
+}
+footer .twoSections .sectionTwo{
+    width: 55%;
+    padding: 0 20px;
+}
+footer .twoSections .sectionTwo h3{
+    border-bottom: none;
+    padding-bottom: 0;
+    text-align: start;
+}
+footer .twoSections .sectionTwo p{
+    text-align: start;
+    font-size: 16px;
+}
+footer .twoSections .sectionTwo form button{
+    width: 71px;
+    height: 39px;
+    background: #00644C;
+    border: 1px solid #00644C;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+footer .twoSections .sectionTwo form button:hover{
+    border: 1px solid #00644C;
+    background: #019874;
+}
+footer .twoSections .sectionTwo form .form-control:focus {
+    border-color: #019874;
+    outline: 0;
+    box-shadow: 0 0 0 0.18rem rgba(0, 100, 76,.25);
+}
+footer .sectionThree{
+    width: 25%;
+    padding: 0 20px;
+}
+footer .sectionThree h3{
+    border-bottom: none;
+    padding-bottom: 0;
+    text-align: start;
+}
+footer .sectionThree section{
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+footer .sectionThree section i{
+    font-size: 22px;
+    color: #00644C;
+    padding-right: 8px;
+}
+footer .sectionThree section span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: #FFFFFF;
+}
+
+/* Form Section */
+.formBody h1{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 41px;
+    color: #2E2E2E;
+}
+.formBody .form{
+    width: 100%;
+    background: #D9D9D9;
+    border-radius: 8px;
+    padding: 30px 50px;
+}
+.formBody .form form .question1 h3,.formBody .form form .question2 h3, .formBody .form form .question4 h3{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #333333;
+}
+.formBody .form form .question1 .answers .answer,.formBody .form form .question2 .answers .answer{
+    cursor: pointer;
+    width: fit-content;
+}
+.formBody .form form .question1 .answers .answer .circle,.formBody .form form .question2 .answers .answer .circle{
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.choose{
+    background-color: #019874 !important;
+}
+.formBody .form form .question1 .answers .answer h2,.formBody .form form .question2 .answers .answer h2{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+    padding-left: 7px;
+}
+.formBody .form form .commentLabel{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #333333;
+}
+.formBody .form form textarea{
+    height: 150px;
+    background-color: #FFFFFF;
+    border: 1px solid #A6A6A6;
+    border-radius: 6px;
+}
+.formBody .form form textarea:focus {
+    border-color: #019874;
+    box-shadow: 0 0 0 0.2rem rgba(0, 100, 76,.25);
+}
+.formBody .form form .question4 .answers .stars i{
+    font-size: 35px;
+    cursor: pointer;
+} 
+.formBody .form form button{
+    width: 115px;
+    height: 50px;
+    background: #019874;
+    border-radius: 8px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 29px;
+    color: #FFFFFF;
+    transition: 0.5s;
+}
+.formBody .form form button:hover{
+    background: #00644C;
+}
+
+/* Doctor Details */
+.doctorDetails{
+    min-height: 100vh;
+    background-color: #F8F8F8;
+}
+.doctorDetails .doctorInformation{
+    width: 100%;
+    height: 312px;
+    padding: 20px;
+    background: #FFFFFF;
+    border-radius: 20px;
+}
+.doctorDetails .doctorInformation .photo{
+    width: 152px;
+    height: 152px;
+    background: #D9D9D9;
+    border: 4px solid #019874;
+    border-radius: 50%;
+}
+.doctorDetails .doctorInformation .details{
+    padding-left: 10px;
+}
+.doctorDetails .doctorInformation .details h3{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 35px;
+    color: #808184;
+}
+.doctorDetails .doctorInformation .details p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 33px;
+    color: #000000;
+    padding-top: 5px;
+}
+.doctorDetails .mab{
+    width: 100%;
+    height: 262px;
+    background:#FFFFFF;
+    border-radius: 20px;
+}
+.doctorDetails .AllComments h4{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 27px;
+    color: #000000;
+}
+.doctorDetails .AllComments .comments{
+    padding: 10px 0 0 20px;
+}
+.doctorDetails .AllComments .comments .comment{
+    display: none;
+}
+.doctorDetails .AllComments .comments .comment:nth-child(1),
+.doctorDetails .AllComments .comments .comment:nth-child(2),
+.doctorDetails .AllComments .comments .comment:nth-child(3){
+    display: flex;
+}
+.doctorDetails .AllComments .comments .comment .details{
+    padding-left: 10px;
+}
+.doctorDetails .AllComments .comments .comment .details h5{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: #000000;
+    padding-top: 15px;
+}
+.doctorDetails .AllComments .comments .comment .details h6{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #ADB5BD;
+    margin: 0;
+}
+.doctorDetails .AllComments .comments .comment .details p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 33px;
+    color: #000000;
+}
+.doctorDetails .bookingInformation{
+    width: 100%;
+    min-height: 812px;
+    background: #FFFFFF;
+    border-radius: 20px;
+}
+.doctorDetails .bookingInformation .header{
+    width: 100%;
+    padding: 20px 0;
+    background: #019874;
+    border-radius: 20px 20px 0px 0px;
+    color: #fff;
+}
+.doctorDetails .bookingInformation .price{
+    padding-top: 20px;
+    border-bottom: 1px solid #D9D9D9;
+}
+.doctorDetails .bookingInformation .price p, .doctorDetails .bookingInformation .price p span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #4D3208;
+    position: relative;
+}
+.doctorDetails .bookingInformation .price p span::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    top: 50%;
+    background-color: #990000;
+    transform: rotate(-21deg);
+}
+
+.doctorDetails .bookingInformation .price p span::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    top: 50%;
+    background-color: #990000;
+    transform: rotate(21deg);
+}
+.doctorDetails .bookingInformation .reservationDate h4{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    color: #808184;
+    padding: 13px 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days{
+    width: 100%;
+    padding: 30px 0;
+    background: #D9D9D9;
+    border-radius: 0px 0px 20px 20px;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day{
+    width: 107px;
+    background: #FFFFFF;
+    border-radius: 8px;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .header{
+    padding: 17px 0;
+    background: #019874;
+    border-radius: 8px 8px 0px 0px;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .header h5{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    color: #FFFFFF;
+    margin: 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .time{
+    padding:5px 0;
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .time span{
+    width: fit-content;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 15px;
+    color: #019874;
+    cursor: pointer;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .booked span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 15px;
+    color: #808184;
+    position: relative;
+    cursor: no-drop;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .booked span::after{
+    content: "";
+    position: absolute;
+    width: 63px;
+    height: 2px;
+    left: 0;
+    top: 50%;
+    background-color: #808184;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .choose{
+    background-color: #019874;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .choose span{
+    color: #fff;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .footer{
+    width: 100%;
+    border: none;
+    background: rgba(1, 152, 116, 0.6);
+    border-radius: 0px 0px 8px 8px;
+    padding: 14px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .green{
+    background: #019874;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .footer h5{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    color: #FFFFFF;
+    margin: 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days .arrowButton{
+    position: absolute;
+    width: 31px;
+    height: 39.43px;
+    font-size: -1px;
+    background: rgba(255, 255, 255, 0.5);
+    color: #019874;
+}
+.doctorDetails .bookingInformation .reservationDate .days .arrowButtonleft{
+    left: 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days .arrowButtonright{
+    right: 0;
+}
+.doctorDetails .bookingInformation .reservationDate .days .arrowButton::after{
+    font-size: 30px;
+    font-weight: bolder;
+}
+.days {
+    position: relative;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doctorDetails .AllComments #see-more{
+    width: 188px;
+    height: 39px;
+    background: #019874;
+    border-radius: 10px;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.doctorDetails .AllComments #see-more:hover{
+    background: #00644C;
+}
+/* .doctorDetails .AllComments .comments .comment{
+    display: none;
+}
+.doctorDetails .AllComments .comments .comment:nth-child(1),
+.doctorDetails .AllComments .comments .comment:nth-child(2),
+.doctorDetails .AllComments .comments .comment:nth-child(3){
+    display: flex;
+} */
+#more{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: center;
+    color: rgba(1, 152, 116, 0.6);
+    padding: 7px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+#more:hover{
+    color: #fff;
+    background-color: #019874;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .time{
+    display: none;
+}
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(1),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(2),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(3),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(4),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(5),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(6),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(7),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(8),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(9),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(10),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(11),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(12),
+.doctorDetails .bookingInformation .reservationDate .days .day .time:nth-child(13){
+    display: inline-block;
+}
+
+/* Model */
+.modal-father{
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    z-index: 85000;
+}
+.modal-dialog{
+    z-index: 90000;
+}
+.modal{
+    --bs-modal-width: 60%;
+}
+.modal-title{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+}
+.modal-body h2{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    padding-bottom: 5px;
+}
+.modal-body h2 span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+.modal-footer .submit-btn{
+    padding: 10px;
+    background: #019874;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #fff;
+    transition: 0.5s;
+}
+.modal-footer .submit-btn:hover{
+    background: #00644C;
+}
+.modal-footer .Delete-btn{
+    padding: 10px;
+    background: #EB1D36;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #fff;
+    transition: 0.5s;
+}
+.modal-footer .Delete-btn:hover{
+    background: #971222;
+}
+.modal-footer .btn-secondary{
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #fff;
+}
+.previousAppointments{
+    width: 100%;
+    padding-bottom: 50px;
+    padding-top: 100px;
+    background-color: #F5F6F8;
+}
+.previousAppointments .appointments{
+    width: 100%;
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 8px;
+    padding: 20px;
+}
+.previousAppointments .appointments h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 36px;
+    color: #000000;
+}
+.previousAppointments .appointments .body{
+
+}
+.previousAppointments .appointments .body .outer-wrapper {
+    margin: 10px;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper {
+    height: fit-content;
+    max-height: 66.4vh;
+    margin-top: 22px;
+    margin: 15px;
+    padding-bottom: 20px;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table {
+    
+    /* min-width: max-content; */
+    background-color: #F5F6F8;
+    border-collapse: separate;
+    border-spacing: 0px;  
+    border-radius: 10px;  
+    
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table th{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 27px;
+    color: #000000;
+    position: sticky; 
+    top: 0px;
+    width: 250px;
+    text-align: center;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table th{ 
+    padding: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table td {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300 !important;
+    font-size: 16px !important;
+    color: #000000;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* padding-left: 20px; */
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table tr:last-child td{
+    border: none;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table td .cancel{
+    padding: 10px 15px;
+    background: rgba(108, 117, 125, 0.815686);
+    border-radius: 8px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: no-drop;
+    border: none;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table td .cancel.available{
+    background: #019874;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.previousAppointments .appointments .body .outer-wrapper .table-wrapper table td .cancel.available:hover{
+    background: #00644C;
+}
+
+/* User Profile */
+.profile{
+    width: 100%;
+    height: 100vh;
+    margin-top: 73px;
+    background-color: #F8F8F8;
+    position: relative;
+}
+
+.profile .background-image{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    left: 0;
+    top: 0;
+    background: url(../imgs/background.png), #D9D9D9;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    z-index: 1;
+}
+.profile .Body{
+    position: relative;
+    z-index: 5;
+    padding-top: 100px;
+}
+.profile .Body img{
+    background-color: #D9D9D9;
+    width: 200px;
+    height: 200px;
+    border: 4px solid #019874;
+    border-radius: 50%;
+}
+.profile .Body .Name{
+    padding-left: 40px;
+}
+.profile .Body .Name h1{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: #2E2E2E;
+}
+.profile .Body .Name h3{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #019874;
+}
+.profile .Body .Information{
+    margin-top: 30px !important;
+    width: 70%;
+}
+.profile .Body .Information h2{
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 35px;
+    color: #A6A6A6;
+    border-bottom: 1px solid #D9D9D9;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+.profile .Body .Information form .form-group{
+    padding-bottom: 20px;
+}
+.profile .Body .Information form .control-label{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 27px;
+    color: #333333;
+    padding-bottom: 10px;
+}
+.profile .Body .Information form input{
+    width: 100%;
+    border: 1px solid #A6A6A6;
+    border-radius: 6px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 22px;
+    color: #333333;
+    padding: 10px;
+}
+.profile .Body .Information form .password-input {
+    position: relative;
+}
+.profile .Body .Information form .password-input input[type="password"] {
+    padding-right: 30px; 
+}
+.profile .Body .Information form .password-input .toggle-password {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 29px;
+    height: 21px;
+    background: url(../imgs/open-eye.png);
+}
+.profile .Body .Information form .Delete-btn{
+    padding: 10px;
+    background: #EB1D36;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #fff;
+    transition: 0.5s;
+}
+.profile .Body .Information form .Delete-btn:hover{
+    background: #971222;
+}
+.profile .Body .Information form .Delete-btn i{
+    font-size: 20px;
+    color: #fff;
+    padding-right: 10px;
+}
+.profile .Body .Information form .btn-save{
+    border: none;
+    padding: 10px;
+    background: #019874;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #fff;
+    transition: 0.5s;
+}
+.profile .Body .Information form .btn-save:hover{
+    background: #00644C;
+}
+
+.widthPhoto{
+    width: -webkit-fill-available !important;
+    padding-right: 20px !important;
+}
+
+@media screen and (max-width: 1400px){
+    .Authentication-page .container .Section-1 h2 {
+        font-size: 22px;
+    }
+    .Authentication-page .container .Section-1 h3 {
+        font-size: 18px;
+    }
+    .Authentication-page .container .Section-2 h3 {
+        font-size: 30px;
+    }
+    .Authentication-page .container .Section-2 form label {
+        font-size: 18px;
+    }
+    .Authentication-page .container .Section-2 p{
+        font-size: 18px;
+    }
+    /* Sign Up Doctor F3 */
+    .Authentication-page .container .Section-2 form .UrgentExamination{
+        width: 35%;
+    }
+    /* Home Section */
+    .home .container .row h3{
+        font-size: 45px;
+        line-height: 55px;
+    }
+    .home .container .row p{
+        font-size: 18px;
+    }
+    /* All Doctors */
+    .doctors .container .allDoctors .Chat{
+        width: 177px;
+    }
+}
+@media screen and (max-width: 1200px){
+    .Authentication-page .container .Section-2 form .SignUp-lable{
+        width: 29%;
+    }
+    /* Sign Up */
+    .Authentication-page .container .Section-2 form .SignUp-lable-F1{
+        width: 30%;
+    }
+    /* Sign Up Doctor F3 */
+    .Authentication-page .container .Section-2 form .UrgentExamination{
+        width: 40%;
+    }
+    /* NavBar */
+    .navbar-expand-lg .navbar-nav .nav-link {
+        margin: 6px 11px;
+    }
+    /* Home Section */
+    .home .container .row h3{
+        font-size: 42px;
+        line-height: 55px;
+    }
+    /* All Doctors */
+    .doctors .container .allDoctors .photo{
+        width: 130px;
+        height: 130px;
+    }
+    .doctors .container .allDoctors .information h3{
+        font-size: 25px;
+    }
+    .doctors .container .allDoctors .information .Rating span{
+        font-size: 14px;
+    }
+    .doctors .container .allDoctors .information .Rating .stars i{
+        font-size: 16px;
+    }
+    .doctors .container .allDoctors .location{
+        cursor: pointer;
+        padding-bottom: 5px;
+    }
+    .doctors .container .allDoctors .description{
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .doctors .container .allDoctors h4{
+        font-size: 18px;
+    }
+    .doctors .container .allDoctors .Chat{
+        width: 137px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+    .doctors .container .allDoctors .Chat svg{
+        width: 24px;
+        height: 24px;
+    }
+    /* News Section */
+    .container-sm{
+        max-width: 720px;
+    }
+    /* Footer Section */
+    footer .sectionOne p{
+        font-size: 15px;
+    }
+}
+@media screen and (max-width: 992px){
+    .container{
+        max-width: 1140px;
+    }
+    .Authentication-page .container .Section-2{
+        border-radius: 20px;
+    }
+    /* Sign Up Doctor F3 */
+    .Authentication-page .container .Section-2 form .UrgentExamination{
+        width: 31%;
+    }
+    /* Home Section */
+    .home .container .row h3{
+        font-size: 34px;
+        line-height: 45px;
+    }
+    .home .container .row p{
+        font-size: 16px;
+    }
+    /* All Doctors */
+    .doctors .container .allDoctors .photo {
+        width: 100px;
+        height: 100px;
+    }
+    .doctors .container .allDoctors .information h3{
+        font-size: 16px;
+    }
+    .doctors .container .allDoctors .information .Rating span{
+        font-size: 10px;
+    }
+    .doctors .container .allDoctors .information .Rating .stars i{
+        font-size: 14px;
+    }
+    .doctors .container .allDoctors .description{
+        font-size: 14px;
+        line-height: 22px;
+    }
+    /* Footer Section */
+    footer .twoSections{
+        width: 100%;
+    }
+    footer .sectionOne p{
+        font-size: 18px;
+    }
+    footer .sectionThree{
+        width: 100%;
+        padding: 0 20px;
+    }
+    footer .Footer{
+        flex-direction: column;
+    }
+    
+}
+@media screen and (max-width: 767px){
+    .container{
+        max-width: 960px;
+    }
+    /* Sign Up Doctor F3 */
+    .Authentication-page .container .Section-2 form .UrgentExamination{
+        width: 43%;
+    }
+    /* Doctors Section */
+    .doctors .container .Filter .cityFilter, .doctors .container .Filter .areaFilter, .doctors .container .Filter .urgentFilter{
+        width: 143px;
+        height: 65px;
+        font-size: 20px;
+    }
+    .doctors .container .Filter .cityFilter svg, .doctors .container .Filter .areaFilter svg{
+        width: 18px;
+        height: 18px;
+    }
+    .doctors .container .Filter .cityFilter span, .doctors .container .Filter .areaFilter span, .doctors .container .Filter .urgentFilter span{
+        font-size: 14px;
+        padding: 0;
+    }
+    .doctors .container .Filter .areaFilter{
+        width: 147px;
+        height: 65px;
+    }
+    .doctors .container .Filter .urgentFilter{
+        width: 187px;
+        height: 65px;
+    }
+    .doctors .container .Filter .urgentFilter i{
+        font-size: 18px;
+        padding: 0 3px 0 0;
+    }
+    .doctors .container .Filter .Search{
+        width: 120px;
+        height: 65px;
+        font-size: 18px;
+        padding: 10px;
+    }
+    .doctors .container .Filter .Search i{
+        font-size: 18px;
+    }
+    .doctors .container .head h2{
+        font-size: 21px;
+        padding-right: 3px;
+    }
+    .doctors .container .head p{
+        font-size: 10px;
+    }
+    .doctors .container .form-control{
+        padding: 6px 6px;
+        font-size: 14px;
+    }
+    .doctors .container .form-group label{
+        font-size: 14px;
+        padding-right: 5px;
+    }
+    /* All Doctors */
+    
+    .doctors .container .allDoctors .photo{
+        width: 130px;
+        height: 130px;
+    }
+    .doctors .container .allDoctors .information h3{
+        font-size: 16px;
+    }
+    .doctors .container .allDoctors .information .Rating span{
+        font-size: 10px;
+    }
+    .doctors .container .allDoctors .information .Rating .stars i{
+        font-size: 14px;
+    }
+    .doctors .container .allDoctors .description{
+        font-size: 14px;
+        line-height: 22px;
+    }
+    .doctors .container .allDoctors .location i{
+        font-size: 20px;
+    }
+    .doctors .container .allDoctors .location h6 span{
+        font-size: 14px;
+    }
+    /* Footer Section */
+    footer .twoSections .sectionOne{
+        width: 100%;
+        text-align: center;
+    }
+    footer .twoSections .sectionOne .logo{
+        justify-content: center;
+    }
+    footer .twoSections .sectionTwo{
+        width: 100%;
+        text-align: center;
+    }
+    footer .Footer,footer .twoSections{
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 567px){
+    .container{
+        max-width: 720px;
+    }
+    .Authentication-page .container .Section-1{
+        display: none;
+    }
+    .Authentication-page .container .Section-2 form .SignUp-lable{
+        width: 45%;
+    }
+    /* Sign Up */
+    .Authentication-page .container .Section-2 form .SignUp-lable-F1{
+        width: 36%;
+    }
+    /* Sign Up Doctor F3 */
+    .Authentication-page .container .Section-2 form .UrgentExamination{
+        width: 46%;
+    }
+    /* Doctors Section */
+    .doctors .container .Filter .cityFilter, .doctors .container .Filter .areaFilter, .doctors .container .Filter .urgentFilter{
+        width: 112px;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+    .doctors .container .Filter .cityFilter span, .doctors .container .Filter .areaFilter span, .doctors .container .Filter .urgentFilter span{
+        font-size: 12px;
+    }
+    .doctors .container .Filter .areaFilter{
+        width: 116px;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+    .doctors .container .Filter .urgentFilter{
+        width: 157px;
+    }
+    .doctors .container .Filter .Search{
+        width: 84px;
+        font-size: 16px;
+        padding-left: 0.2rem;
+        padding-right: 0.2rem;
+    }
+    .doctors .container .Filter .Search i{
+        font-size: 16px;
+    }
+
+
+    .widthPhoto {
+        width: -webkit-fill-available !important;
+        padding-right: 10px !important;
+    }
+}
+
+#map {
+    height: 160px;
+    width: 400px;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 12px;
+}
+
+
+select{
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 14px;
+    position: relative;
+    appearance: auto !important;
+}
+.form-body {
+    display: none;
+}

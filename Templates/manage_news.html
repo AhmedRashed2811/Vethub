@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage News</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form input[type="text"],
+        form input[type="file"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .news-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            border: 1px solid #ccc; /* Add border */
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .news-item {
+            width: 300px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc; /* Add border */
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item img {
+            width: 100%;
+            height: 200px; /* Adjust the height as needed */
+            object-fit: cover; /* Ensure the image covers the entire container */
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .news-item p {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        #delete-button {
+            padding: 5px 10px; /* Adjust padding as needed */
+            font-size: 12px; /* Adjust font size as needed */
+            text-decoration: none;
+            background-color: #f44336; /* Red */
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Button hover effect */
+        #delete-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+        }
+
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 5px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-buttons {
+            margin-top: 20px;
+        }
+
+        /* Styles for the delete button */
+        #delete-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            text-decoration: none;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Button hover effect */
+        #delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Styles for the delete button inside the modal */
+        .modal-buttons button {
+            padding: 8px 20px;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 0 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Button hover effect inside the modal */
+        .modal-buttons button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+        }
+
+        /* Styles for the delete button */
+        .modal-buttons button.delete {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+
+        /* Styles for the cancel button */
+        .modal-buttons button.cancel {
+            background-color: #ccc; /* Gray */
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage News</h1>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="news-container">
+        {% for new in news %}
+            <div class="news-item">
+                <p>{{new.information}}</p>
+                <img src="{{ new.image.url }}" alt="{{ new.information}}">
+                <form action="{% url 'delete_news' new.id %}" method="post" class="delete-form">
+                    {% csrf_token %}
+                    <!-- Add an onclick event to trigger the modal -->
+                    <button type="button" id="delete-button" onclick="openModal()">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Are you sure you want to delete this news?</p>
+            <div class="modal-buttons">
+                <button class="cancel" onclick="closeModal()">Cancel</button>
+                <button class="delete" onclick="deleteNews()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to control the modal -->
+    <script>
+        // Get the modal element
+        var modal = document.getElementById("modal");
+
+        // Function to open the modal
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        var closeBtn = document.getElementsByClassName("close")[0];
+        // When the user clicks the close button, close the modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+
+        // Function to close the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Function to handle the delete action
+        function deleteNews() {
+            // Get the delete form
+            var deleteForm = document.querySelector('.delete-form');
+            
+            // Submit the form
+            deleteForm.submit();
+            closeModal();
+        }
+    </script>
+</body>
+</html>

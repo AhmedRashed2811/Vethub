@@ -1,0 +1,298 @@
+{% load static %}
+<!-- chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        .sent {
+    justify-content: flex-end;
+}
+
+.received {
+    justify-content: flex-start;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    font-weight: bold;
+    max-width: 70%;
+}
+
+.profile-picture {
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
+    border-radius: 50%; /* Make the image round */
+    margin-right: 10px; /* Add some spacing between the image and the sender's name */
+}
+
+.sender {
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+.message-content {
+    padding: 8px;
+    border-radius: 8px;
+    max-width: 70%;
+}
+
+.timestamp {
+    font-size: 0.8em;
+    color: #888;
+}
+
+.sent .message-content {
+    border-top-right-radius: 0;
+}
+
+.received .message-content {
+    border-top-left-radius: 0;
+}
+
+.sent .sender {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container" id="chat-container_id">
+
+        <div class="messages-container" id="ChatBody">
+    
+            {% for group_for in request.user.groups.all %}
+    
+                {% if group_for.name == 'Doctors' %}
+                    <h1> Chat with {{receiver.name}} </h1>
+                {% elif group_for.name == 'Customers' %}
+                    <h1> Chat with Dr.{{receiver.name}} </h1>
+    
+                {% endif %}
+            {% endfor %}
+    
+            <!-- Messages will be dynamically populated here -->
+            {% for message in messages %}
+                <div class="message {% if message.msg_sender == request.user %}sent{% else %}received{% endif %}">
+                    {% if message.msg_sender != request.user %}
+                        {% for group_for in request.user.groups.all %}
+    
+                            {% if group_for.name == 'Doctors' %}
+                                <img src="{% static 'l60Hf.png' %}" alt="Profile Picture" width="40px" class="profile-picture">
+                            {% elif group_for.name == 'Customers' %}
+                                <img src="{{ message.msg_sender.doctor.profile_photo.url }}" class="profile-picture">
+                            {% endif %}
+                        {% endfor %}
+    
+                        <span class="sender">{{ message.msg_sender.name }}</span>
+                    {% endif %}
+    
+                    <div class="message-content" id="MsgContent">
+                        {{ message.content }}
+                        <span class="timestamp">{{ message.timestamp }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    
+        <form action="" method="POST" id="myForm">
+            {% csrf_token %}
+            <div class="input-container">
+                <div>
+                    <label for="content">Message:</label><br>
+                    <textarea id="content" name="content" rows="4" cols="50"></textarea>
+                </div>
+                <br>
+                <div id="error-message" style="color:red;"></div>
+                <input type="submit" id="send-button" value="Send">
+            </div>
+        </form>
+    </div>
+    
+
+    <script>
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        let form = document.getElementById("myForm")
+        form.addEventListener("submit", sendChat)
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            const options = {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true // Use 12-hour clock format
+            };
+            return date.toLocaleString('en-US', options);
+        }
+        
+        
+        function sendChat(e){
+            e.preventDefault()
+            let chatMessage = document.getElementById("content").value
+            const data = { msg: chatMessage};
+            let url = "{% url 'send_message' receiver.id %}"
+
+            async function postJSON(data) {
+                try {
+                    const response = await fetch(url, {
+                                                    method: "POST", // or 'PUT'
+                                                    headers: {
+                                                        "Content-Type": "application/json",
+                                                        'X-CSRFToken': csrftoken
+                                                    },
+                                                    body: JSON.stringify(data),
+                                                });
+                    
+                    if (!response.ok) {
+                        if (response.status === 400) {
+                            document.getElementById("error-message").innerText = "Must Enter Message";
+                            const errorData = await response.json();
+                            throw new Error(errorData.error);
+                        }
+                    }
+
+                    document.getElementById("error-message").innerText = "";
+                    const result = await response.json();
+                    const formattedTimestamp = formatTimestamp(result.time);
+                    let chatBody = document.getElementById("ChatBody");
+                    let chatMessageBox = document.createElement("div")
+                    chatMessageBox.classList.add("message");
+                    chatMessageBox.style.justifyContent = "flex-end"
+                    chatMessageBox.innerHTML = `
+                            <span>  ${result.body} </span> 
+                            <span class="timestamp">${formattedTimestamp}</span>
+
+                            `;
+                    // Append the new message to the chat container
+                    chatBody.append(chatMessageBox);
+                    document.getElementById("content").value = ""
+                    // Scroll to the bottom of the chat container
+                    scrollToBottom();
+
+                } 
+                catch (error) {
+                    console.error("Error:", error);
+                }
+            }
+                
+                postJSON(data);
+        }
+
+
+        setInterval(receiveChat, 1000)
+        
+        let counter = {{number_of_received_messages}}
+        function receiveChat() {
+
+            let url = "{% url 'receive_message' receiver.id %}";
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if(data.body.length == 0){}
+                else{
+                    if(counter == data.body.length){}
+                    else{
+                        let lastMsg = data.body[data.body.length - 1]
+                        let lastMsgTime = data.time[data.time.length - 1]
+
+                        
+                        const formattedTimestamp = formatTimestamp(lastMsgTime);
+                        let chatBody = document.getElementById("ChatBody");
+                        let chatMessageBox = document.createElement("div")
+                        chatMessageBox.classList.add("message");
+                        chatMessageBox.innerHTML = `
+                            <div>
+
+                                    {% for group_for in request.user.groups.all %}
+
+                                        {% if group_for.name == 'Doctors' %}
+                                        <img src="{% static 'l60Hf.png' %}" alt="Profile Picture" width="100px" class="profile-picture">
+                                        {% elif group_for.name == 'Customers' %}
+                                        <img src="{{ receiver.doctor.profile_photo.url }}"  class="profile-picture">
+
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <span class="sender">{{ receiver.name }}</span>
+                                    <span>  ${lastMsg} </span> 
+                                <span class="timestamp">${formattedTimestamp}</span>
+                                <br/>
+                            </div>
+                            `;
+                        // Append the new message to the chat container
+                        chatBody.append(chatMessageBox);
+                        document.getElementById("content").value = ""
+                    }
+                }
+                counter = data.body.length
+                // Scroll to the bottom of the chat container
+                scrollToBottom();
+            })
+            .catch((error) => {
+                console.error('Error', error)
+            })
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("myForm");
+            const textarea = document.getElementById("content");
+
+            textarea.addEventListener("keypress", function (event) {
+                // Check if Enter key is pressed
+                if (event.keyCode === 13 && !event.shiftKey) {
+                    // Prevent default behavior (new line)
+                    event.preventDefault();
+                    // Submit the form
+                    sendChat(event)
+                }
+            });
+        });
+
+    // Function to scroll to the bottom of the page
+    function scrollToBottom() {
+            // Scroll to the maximum scrollTop value
+            document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            // For cross-browser compatibility
+            document.body.scrollTop = document.body.scrollHeight;
+        }
+
+    // Event listener to scroll to bottom when the page is loaded
+    window.addEventListener('load', function () {
+            // Call the scrollToBottom function when the page is loaded
+            scrollToBottom();
+        });
+    </script>
+</body>
+</html>

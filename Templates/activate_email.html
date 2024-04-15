@@ -1,0 +1,7 @@
+{% autoescape off %}
+Hi {{user.email}}
+
+Please Click Here to Confirm Your Email:
+
+http://{{domain}}{% url 'activate' uidb64=user_id token=token %}
+{% endautoescape %}

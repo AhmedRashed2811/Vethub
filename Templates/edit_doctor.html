@@ -1,0 +1,515 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'imgs/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style20.css' %}">
+
+</head>
+<body>
+
+<<!-- NavBar -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex justify-content-center align-items-center" to=''>
+    
+            <img src="{% static 'imgs/logo.png' %}" alt="logo" />
+            <h1 class="m-0">Vet<span>Hub</span></h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" style="text-align: center;">
+            
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ng-star-inserted">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+        
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        {% csrf_token %}
+                        {% for group_for in request.user.groups.all %}
+                            {% if group_for.name == 'Doctors' %}
+                                <a class="nav-link" href="{% url 'chats' %}" >Chats</a>
+                            {% elif group_for.name == 'Customers' %}
+                                <a class="nav-link" href="{% url 'chats' %}" >Chats</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </li>
+        
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        {% csrf_token %}
+                        {% for group_for in request.user.groups.all %}
+                            {% if group_for.name == 'Doctors' %}
+                                <a class="nav-link active" href="{% url 'edit_doctor' request.user.id%}" >Profile</a>
+                            {% elif group_for.name == 'Customers' %}
+                                <a class="nav-link active" href="{% url 'edit_customer' request.user.id%}" >Profile</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </li>
+
+                <li class="nav-item">
+
+                {% if request.user.is_authenticated %}
+                    {% csrf_token %}
+                    {% for group_for in request.user.groups.all %}
+                        {% if group_for.name == 'Admins' %}
+                            <a class="nav-link" href="{% url 'admin_panel' %}" >Admin Panel</a>
+                        {% elif group_for.name == 'Doctors' %}
+                            <a class="nav-link" href="{% url 'clinic_management_system' %}" >Clinic Management System</a>
+                        {% elif group_for.name == 'Customers' %}
+                            <a class="nav-link" href="{% url 'customer_previous_appointments' %}" >Appointments</a>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                    
+                </li>
+        
+            </ul>
+    
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 justify-content-center align-items-center gap-2">
+    
+                <li class='nav-item position-relative'>
+                    <div class="flag">
+                        <!-- <img src="" alt=""> -->
+                        <svg width="60" height="35" viewBox="0 0 60 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="60" height="35" rx="6" fill="#F7FAF8"/>
+                            <rect x="3.5" y="3" width="53" height="29" fill="#FAFAFA"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M56.5 28.5326V22.2282H44.9934L56.5 28.5326Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M42.5526 22.2283L56.5 29.7935L56.5 32L38.3684 22.2283H42.5526Z" fill="#C8102E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 32H50.2237L35.2303 23.8043V32Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 32H10.125L24.7697 23.8043L24.7697 32Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 22.2283L7.475 32L3.5 32L21.1434 22.2283H24.7697Z" fill="#C8102E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 28.5326V22.2282H15.0066L3.5 28.5326Z" fill="#012169"/>
+                            <rect x="3.5" y="14.6631" width="53" height="5.67391" fill="#C8102E"/>
+                            <rect x="26.8618" y="3" width="6.27632" height="29" fill="#C8102E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M56.5 6.46741V12.7718H44.9934L56.5 6.46741Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 12.7717L52.525 3L56.5 3L38.8566 12.7717H35.2303Z" fill="#C8102E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 3H49.875L35.2303 11.1957L35.2303 3Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 3H9.77632L24.7697 11.1957V3Z" fill="#012169"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4474 12.7717L3.5 5.20652L3.5 3L21.6316 12.7717H17.4474Z" fill="#C8102E"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 6.46741V12.7718H15.0066L3.5 6.46741Z" fill="#012169"/>
+                            <rect class="flagHover" x="3.5" y="3" width="53" height="29" fill="black" fill-opacity="0.16"/>
+                            </svg>
+                            
+                    </div>
+                </li>
+
+
+                {% if not request.user.is_authenticated %}
+
+                    <li class="nav-item ng-star-inserted cursorPointer">
+                        <a href="{% url 'signup' %}" class="nav-link logout fw-bolder">SignUp</a>
+                    </li>
+                    <li class="nav-item ng-star-inserted cursorPointer">
+                        <a href="{% url 'login' %}" class="nav-link logout fw-bolder">Login</a>
+                    </li>
+
+                {%else%}
+                    <li class="nav-item ng-star-inserted cursorPointer">
+                        <button class="nav-link logout fw-bolder"  type="button" class="btn delete mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdroptwo">Logout</button>
+                    </li>
+                {% endif %}
+                
+            </ul>
+    
+        </div>
+    </div>
+</nav>
+
+
+    <!-- User Profile -->
+    <section class="profile">
+        <div class="background-image"> </div>
+
+        <div class="Body">
+            <div class="container">
+                <div class="d-flex align-items-end">
+                    <!-- <label for="ProfilePhoto" class="ProfilePhoto"><div class="image"> </div> Upload</label> -->
+                    <img src="{{ user.doctor.profile_photo.url }}" alt="Profile photo" class="profileImage">
+                    <label for="ProfilePhoto" class="custom-file-upload">
+                        <img src="{% static 'imgs/pen.png' %}" alt="Upload Icon" class="upload-icon">
+                    </label>
+                    <!-- <input type="file" id="id_profile_photo" value="{{request.user.doctor.profile_photo}}" name="profile_photo" class="form-control"> -->
+                    <div class="Name">
+                        <h1> {{user.name}} </h1>
+                        <h3> {{doctor.appointments_count}} Appointments</h3>
+                    </div>
+                </div>
+                <div class="Information m-auto"> 
+                    <h2>Personal details </h2>
+                    <form action="{% url 'edit_doctor' user.id %}" id="form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" id="ProfilePhoto" value="{{doctor.profile_photo}}" name="profile_photo" accept="image/*" style="display: none;" onchange="ProfileUpdate(event);">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="UserName">User Name</label>
+                                    <input id="UserName" type="text" class="form-control" value="{{user.name}}" name="name" >
+                                    <input id="oldName" type="hidden" class="form-control" value="{{user.name}}" >
+                                    <div id="name-error" style="color:red"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="MobileNumber">Mobile Number</label>
+                                    <input id="MobileNumber" type="text" class="form-control" value={{user.phone_number}} name="phone_number">
+                                    <input id="OldMobileNumber" type="hidden" class="form-control" value={{user.phone_number}}>
+                                </div>
+                                <div id="phone-error" style="color:red">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            {{ message }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="Email">Email</label>
+                                    <input id="Email" type="email" class="form-control no-drop" value={{user.email}} disabled>
+                                    <div id="email-error" style="color:red"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="City">City</label>
+                                    <select name="governorate" class="form-control" id="governorate-select">
+                                        <option value="">{{doctor.governorate}}</option>
+                                    </select>
+                                    <div id="governorate-error" style="color:red"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="area">Area</label>
+                                    <select name="city" class="form-control" id="region-select">
+                                        <option value="">{{doctor.city}}</option>
+                                    </select>
+                                    <div id="city-error" style="color:red"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="price">Price</label>
+                                    <input name="price" id="price" type="number" class="form-control" value="{{doctor.price}}">
+                                    <div id="price-error" style="color:red"></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                            
+                                <div id="map">
+                                    
+                                </div>
+                                <small><a href="https://www.openstreetmap.org/?mlat={{ latitude }}&amp;mlon={{ longitude }}#map=13/{{ latitude }}/{{ longitude }}" style="color:#019874; text-decoration: none; font-size: 100%;">View Larger Map To See The Location</a></small>
+
+                                <input type="hidden" id="latitude" name="latitude" value={{latitude}}>
+                                <input type="hidden" id="longitude" name="longitude" value={{longitude}}>
+                                <input type="hidden" id="location" name="location">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group d-flex justify-content-start" style="padding-top: 30px;">
+                                    <label class="control-label UrgentExamination my-auto" for="UrgentExamination">Ability of Urgent Examination</label>
+                                    <div class="gender-details">
+                                        {% if doctor.urgent_examination%}
+                                            <input type="radio" name="UrgentExamination" id="dot-1" checked>
+                                            <input type="radio" name="UrgentExamination" id="dot-2">
+                                        {%else%}
+                                            <input type="radio" name="UrgentExamination" id="dot-1">
+                                            <input type="radio" name="UrgentExamination" id="dot-2" checked>
+                                        {%endif%}
+                                        <input type="hidden" name="urgent-examination" id="urgent-examination">
+                                        
+                                        
+                                        <div class="category">
+                                            <label for="dot-1">
+                                                <span class="dot one"></span>
+                                                <span class="UrgentExamination">Yes</span>
+                                            </label>
+                                            <label for="dot-2">
+                                                <span class="dot two"></span>
+                                                <span class="UrgentExamination">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="Description">Description</label>
+                                    <textarea class="form-control" name="Description" id="Description" cols="30" rows="10">{{doctor.description}}</textarea>
+                                    <div id="description-error" style="color:red"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="success-msg" style="display: none; color:#019874">"Your Account has been Updated successfully"</div>
+                        
+                        <div class="d-flex justify-content-end py-3">
+                            <button  type="button" class="btn Delete-btn mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Delete account
+                            </button>
+                            <button id="update-button" onclick="updateLocation()" type="button" class="btn btn-save">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-start Footer">
+                <div class="d-flex justify-content-center align-items-center twoSections">
+                    <div class="sectionOne py-4">
+                        <div class="logo d-flex align-items-center">
+                            <img src="{% static 'imgs/logo.png' %}" alt="logo" />
+                            <h1 class="m-0">Vet<span>Hub</span></h1>
+                        </div>
+                        <p>A website for booking veterinary doctors</p>
+                        <section class="socialMedia">
+                            <h3>Social Media</h3>
+                            <section class="socialLinks d-flex justify-content-around align-items-center pt-2">
+                                    <a href="https://www.facebook.com/"><img src="{% static 'imgs/facebook.png' %}" alt="facebook"></a>
+                                    <a href="https://twitter.com/?lang=ar" ><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="#"><img src="{% static 'imgs/Google.png' %}" alt="Google"></a>
+                                    <a href="https://www.linkedin.com/"><img src="{% static 'imgs/linkedin.png' %}" alt="linkedin"></a>
+                            </section>
+                        </section>
+                    </div>
+                    <div class="sectionTwo py-4">
+                        <h3>Your Pet is in safe hands</h3>
+                        <p>VetHub website first and last goal is to obtain the best and fastest way to care for your pet</p>
+                        <h3>Contact Us</h3>
+                        <form class="d-flex justify-content-center align-items-center">
+                            <input id='Massage' class='form-control' type="text" placeholder="Massage" />
+                            <div class="px-2">
+                                <button  type="submit" class='btn text-white'>Send</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div class="sectionThree py-4">
+                    <h3>Get in Touch</h3>
+                    <section>
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+201222222222</span>
+                    </section>
+                    <section>
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>contact@example.com</span>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Massage Confirmation -->
+    
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2>Are you sure you want delete your account?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="{% url 'delete_account' request.user.id%}"class="btn Delete-btn">Delete</a>
+            </div>
+            </div>
+        </div>
+
+        <div class="w-100 modal-father"></div>
+    </div>
+
+    
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([{{ latitude }}, {{ longitude }}], 13); // Set initial map view
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([{{ latitude }}, {{ longitude }}], { draggable: false }).addTo(map);
+
+        // Update marker position when map is clicked
+        map.on('click', function(event){
+            marker.setLatLng(event.latlng);
+            document.getElementById('latitude').value = event.latlng.lat;
+            document.getElementById('longitude').value = event.latlng.lng;
+        });
+
+        
+        function checkName(name){
+            const onlyLettersRegex = /^[a-zA-Z\s]+$/;
+            if (onlyLettersRegex.test(name) == false) {return ("Name Contains Invalid Characters");} 
+
+            const atLeastTwoWordsRegex = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)+$/;
+            if (atLeastTwoWordsRegex.test(name) == false) {return ("Name Must Have at Least 2 Names");} 
+            
+            return true
+        }
+
+        function checkPhoneNumber(phoneNumber){
+            const onlyLettersRegex = /01(0|1|2|5)[0-9]{8}$/;
+            if (onlyLettersRegex.test(phoneNumber) == false) {return ("Phone Number Must Be in Format '01**********'");} 
+            return true
+        }
+
+        function checkEmail(email){
+            const onlyLettersRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;;
+            if (onlyLettersRegex.test(email) == false) {return ("Email Not Valid");} 
+            return true
+        }
+    
+        // // Assuming this script is included in your HTML file
+        // // and is executed after the page has loaded
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // Get all form elements with the 'status-form' class
+        //     var form = document.getElementById('form');
+
+
+        //     form.addEventListener('submit', function(event) {
+        //         // Prevent the default form submission behavior
+        //         event.preventDefault();
+
+        //         // Get the form's action URL
+        //         var actionUrl = form.getAttribute('action');
+
+        //         // Create a new FormData object containing form data
+        //         var formData = new FormData(form);
+
+        //         // Send a POST request to the server
+        //         fetch(actionUrl, {
+        //             method: 'POST',
+        //             body: formData
+        //         })
+        //         .then(function(response) {
+        //             // Check if the response indicates success
+        //             if (response.ok) {
+        //                 // Refresh the page
+        //                 //document.getElementById("success-msg").style.display = "block"
+                        
+        //                 window.scrollTo(0, 0); // Scrolls to the top-left corner of the page
+        //             } else {
+        //                 // Handle errors or non-successful responses
+        //                 console.error('Failed to update status');
+        //             }
+        //         })
+        //         .catch(function(error) {
+        //             // Handle network errors or other issues
+        //             console.error('Error:', error);
+        //         });
+        //     });
+
+        // });
+
+
+        function updateLocation() {
+            document.getElementById("phone-error").innerHTML = ""
+            document.getElementById("name-error").innerHTML = ""
+            document.getElementById("email-error").innerHTML = ""
+            document.getElementById("governorate-error").innerHTML = ""
+            document.getElementById("city-error").innerHTML = ""
+            document.getElementById("price-error").innerHTML = ""
+            document.getElementById("description-error").innerHTML = ""
+            var oldName = document.getElementById("oldName").value
+            var oldPhone = document.getElementById("OldMobileNumber").value
+            var name = document.getElementById("UserName").value
+            var phone_number = document.getElementById("MobileNumber").value
+            var email = document.getElementById("Email").value
+            // var governorate = document.getElementById("governorate-select").value;
+            // var city = document.getElementById("region-select").value;
+            var price = document.getElementById("price").value;
+            var description = document.getElementById("Description").value;
+
+            var latitude = document.getElementById("latitude").value;
+            var longitude = document.getElementById("longitude").value;
+            var locationURL = generateOpenStreetMapURL(latitude, longitude);
+            document.getElementById('location').value = locationURL;
+            var allGood = true
+            
+            var urgentExaminationInput = document.getElementById('urgent-examination');
+                var radioButtons = document.querySelectorAll('input[name="UrgentExamination"]');
+                
+                if (radioButtons[0].checked) {
+                    // If the first radio button is checked, set the value of the hidden input to 'True'
+                    urgentExaminationInput.value = 'True';
+                } else if (radioButtons[1].checked) {
+                    // If the second radio button is checked, set the value of the hidden input to 'False'
+                    urgentExaminationInput.value = 'False';
+                }
+
+            
+
+            if (name == "" || phone_number == "" || email == "" || price == "" || description == ""){
+                allGood = false
+            }
+
+            if(checkName(name) != true){
+                document.getElementById("name-error").innerHTML = checkName(name)
+                allGood = false
+            }
+
+            if(checkPhoneNumber(phone_number) != true){
+                document.getElementById("phone-error").innerHTML = checkPhoneNumber(phone_number)
+                allGood = false
+            }
+
+            if(checkEmail(email) != true){
+                document.getElementById("email-error").innerHTML = checkEmail(email)
+                allGood = false
+            }
+
+            // if(oldName == name && phone_number== oldPhone){
+            //     allGood = false
+            // }
+
+            if(allGood == true){
+                //document.getElementById("update-button").setAttribute("type", "submit");
+                // Here you can proceed with form submission or other actions
+                document.getElementById("form").submit()
+            }
+
+
+        }
+
+        // Function to generate OpenStreetMap URL from coordinates
+        function generateOpenStreetMapURL(latitude, longitude) {
+            return "https://www.openstreetmap.org/?mlat=" + latitude + "&mlon=" + longitude + "#map=13/" + latitude + "/" + longitude;
+        }
+        
+    </script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Swiper JS -->
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/index9.js' %}"></script>
+</body>
+</html>
+
+

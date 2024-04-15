@@ -1,0 +1,778 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. {{doctor.name}}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'imgs/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style20.css' %}">
+</head>
+<body>
+    <!-- NavBar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex justify-content-center align-items-center" to='' href="{% url 'index' %}">
+        
+                <img src="{% static 'imgs/logo.png' %}" alt="logo" />
+                <h1 class="m-0">Vet<span>Hub</span></h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" style="text-align: center;">
+                
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ng-star-inserted">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+            
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                            {% csrf_token %}
+                            {% for group_for in request.user.groups.all %}
+                                {% if group_for.name == 'Doctors' %}
+                                    <a class="nav-link" href="{% url 'chats' %}" >Chats</a>
+                                {% elif group_for.name == 'Customers' %}
+                                    <a class="nav-link" href="{% url 'chats' %}" >Chats</a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+            
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                            {% csrf_token %}
+                            {% for group_for in request.user.groups.all %}
+                                {% if group_for.name == 'Doctors' %}
+                                    <a class="nav-link" href="{% url 'edit_doctor' request.user.id%}" >Profile</a>
+                                {% elif group_for.name == 'Customers' %}
+                                    <a class="nav-link" href="{% url 'edit_customer' request.user.id%}" >Profile</a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </li>
+
+                    <li class="nav-item">
+
+                    {% if request.user.is_authenticated %}
+                        {% csrf_token %}
+                        {% for group_for in request.user.groups.all %}
+                            {% if group_for.name == 'Admins' %}
+                                <a class="nav-link" href="{% url 'admin_panel' %}" >Admin Panel</a>
+                            {% elif group_for.name == 'Doctors' %}
+                                <a class="nav-link" href="{% url 'clinic_management_system' %}" >Clinic Management System</a>
+                            {% elif group_for.name == 'Customers' %}
+                                <a class="nav-link" href="{% url 'customer_previous_appointments' %}" >Appointments</a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                        
+                    </li>
+            
+                </ul>
+        
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 justify-content-center align-items-center gap-2">
+        
+                    <li class='nav-item position-relative'>
+                        <div class="flag">
+                            <!-- <img src="" alt=""> -->
+                            <svg width="60" height="35" viewBox="0 0 60 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="60" height="35" rx="6" fill="#F7FAF8"/>
+                                <rect x="3.5" y="3" width="53" height="29" fill="#FAFAFA"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M56.5 28.5326V22.2282H44.9934L56.5 28.5326Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M42.5526 22.2283L56.5 29.7935L56.5 32L38.3684 22.2283H42.5526Z" fill="#C8102E"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 32H50.2237L35.2303 23.8043V32Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 32H10.125L24.7697 23.8043L24.7697 32Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 22.2283L7.475 32L3.5 32L21.1434 22.2283H24.7697Z" fill="#C8102E"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 28.5326V22.2282H15.0066L3.5 28.5326Z" fill="#012169"/>
+                                <rect x="3.5" y="14.6631" width="53" height="5.67391" fill="#C8102E"/>
+                                <rect x="26.8618" y="3" width="6.27632" height="29" fill="#C8102E"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M56.5 6.46741V12.7718H44.9934L56.5 6.46741Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 12.7717L52.525 3L56.5 3L38.8566 12.7717H35.2303Z" fill="#C8102E"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M35.2303 3H49.875L35.2303 11.1957L35.2303 3Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M24.7697 3H9.77632L24.7697 11.1957V3Z" fill="#012169"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.4474 12.7717L3.5 5.20652L3.5 3L21.6316 12.7717H17.4474Z" fill="#C8102E"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 6.46741V12.7718H15.0066L3.5 6.46741Z" fill="#012169"/>
+                                <rect class="flagHover" x="3.5" y="3" width="53" height="29" fill="black" fill-opacity="0.16"/>
+                                </svg>
+                                
+                        </div>
+                    </li>
+
+                    {% if not request.user.is_authenticated %}
+
+                        <li class="nav-item ng-star-inserted cursorPointer">
+                            <a href="{% url 'signup' %}" class="nav-link logout fw-bolder">SignUp</a>
+                        </li>
+                        <li class="nav-item ng-star-inserted cursorPointer">
+                            <a href="{% url 'login' %}" class="nav-link logout fw-bolder">Login</a>
+                        </li>
+
+                    {%else%}
+                        <li class="nav-item ng-star-inserted cursorPointer">
+                            <button class="nav-link logout fw-bolder"  type="button" class="btn delete mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdroptwo">Logout</button>
+                        </li>
+                    {% endif %}
+                    
+                </ul>
+        
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Doctor Details -->
+    <section class="doctorDetails pt-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-7">
+                    <div class="doctorInformation d-flex justify-content-start mb-4">
+                        <div>
+                            <img class="photo" src="{{ doctor.doctor.profile_photo.url }}" alt="Profile photo">
+                        </div>
+                        <div class="details">
+                            <h3>Dr. {{doctor.name}}</h3>
+                            <div class="location d-flex align-items-center">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <h6><span>{{doctor.doctor.governorate}}</span>,<span>{{doctor.doctor.city}}</span></h6>
+                            </div>
+                            <p class="description">{{doctor.doctor.description}}</p>
+                            <div class="d-flex justify-content-between">
+                                <div class="Rating d-flex justify-content-center align-items-center">
+                                    <span>{{doctor.doctor.rating}}</span>
+                                    <div class="stars px-1">
+                                        {{doctor_rating|safe}}
+                                    </div>
+                                    <span>({{doctor.doctor.reviews}})</span>
+                                </div>
+                                {% for group_for in request.user.groups.all %}
+                                    {% if group_for.name == 'Customers' %}
+                                        <form method="post" action="{% url 'make_chat' doctor.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="user_id" value="{{ request.user.id }}">
+                                            <input type="hidden" name="user" value="{{ request.user.customer }}">
+                                            <input type="hidden" name="doctor_id" value="{{ doctor.user.id }}">
+                                            <button style="border-style: none;" type="submit" class="Chat d-flex justify-content-center align-items-center">
+                                                Chat with Doctor
+                                                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M8.16667 4.66675C5.58934 4.66675 3.5 6.75593 3.5 9.33307V15.475C3.5 18.0521 5.58934 20.1413 8.16667 20.1413L8.16667 23.2165C8.16667 23.314 8.27912 23.3685 8.35563 23.3081L12.3667 20.1413H19.8333C22.4107 20.1413 24.5 18.0521 24.5 15.475V9.33307C24.5 6.75593 22.4107 4.66675 19.8333 4.66675H8.16667Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                                    <path d="M10.5 12.8334C10.5 13.4777 9.97767 14.0001 9.33334 14.0001C8.68901 14.0001 8.16667 13.4777 8.16667 12.8334C8.16667 12.1891 8.68901 11.6667 9.33334 11.6667C9.97767 11.6667 10.5 12.1891 10.5 12.8334Z" fill="white"/>
+                                                    <path d="M15.1667 12.8334C15.1667 13.4777 14.6443 14.0001 14 14.0001C13.3557 14.0001 12.8333 13.4777 12.8333 12.8334C12.8333 12.1891 13.3557 11.6667 14 11.6667C14.6443 11.6667 15.1667 12.1891 15.1667 12.8334Z" fill="white"/>
+                                                    <path d="M19.8333 12.8334C19.8333 13.4777 19.311 14.0001 18.6667 14.0001C18.0223 14.0001 17.5 13.4777 17.5 12.8334C17.5 12.1891 18.0223 11.6667 18.6667 11.6667C19.311 11.6667 19.8333 12.1891 19.8333 12.8334Z" fill="white"/>
+                                                </svg>  
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mab">
+                        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox={{ bbox_longitude_min }}%2C{{ bbox_latitude_min }}%2C{{ bbox_longitude_max }}%2C{{ bbox_latitude_max }}&amp;layer=mapnik&amp;marker={{ latitude }}%2C{{ longitude }}"></iframe>
+                        <br/>
+                        <small><a href="https://www.openstreetmap.org/?mlat={{ latitude }}&amp;mlon={{ longitude }}#map=13/{{ latitude }}/{{ longitude }}" style="color:#019874; text-decoration: none;">View Larger Map</a></small>                
+                    </div>
+
+                    <div class="AllComments mt-5">
+                        <h4>{{feedbacks_count}} Feedback</h4>
+                        <div class="comments">
+                            {% for feedback in feedback_list %}
+                                    <div class="comment justify-content-start mb-1">
+                                        <div>
+                                            <svg width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="51" height="51" rx="25.5" fill="#019874"/>
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M26 18C23.7908 18 22 19.7909 22 22C22 24.2091 23.7908 26 26 26C28.2091 26 30 24.2091 30 22C30 19.7909 28.2091 18 26 18ZM29.641 26.7694C31.075 25.673 32 23.9445 32 22C32 18.6863 29.3137 16 26 16C22.6863 16 20 18.6863 20 22C20 23.9445 20.925 25.673 22.359 26.7694C21.3535 27.2142 20.4285 27.8436 19.636 28.636C19.0241 29.248 18.5093 29.939 18.1017 30.6851C17.3496 32.0619 17.6564 33.4657 18.5034 34.4584C19.3188 35.414 20.625 36 22 36H30C31.3749 36 32.6812 35.414 33.4966 34.4584C34.3436 33.4657 34.6503 32.0619 33.8982 30.6851C33.4906 29.939 32.9759 29.248 32.3639 28.636C31.5715 27.8436 30.6464 27.2142 29.641 26.7694ZM26 28C24.1435 28 22.363 28.7375 21.0502 30.0503C20.5742 30.5263 20.1739 31.0637 19.8569 31.6439C19.55 32.2058 19.649 32.7198 20.0248 33.1602C20.4322 33.6376 21.1658 34 22 34H30C30.8341 34 31.5678 33.6376 31.9752 33.1602C32.351 32.7198 32.45 32.2058 32.143 31.6439C31.826 31.0637 31.4257 30.5263 30.9497 30.0503C29.637 28.7375 27.8565 28 26 28Z" fill="white"/>
+                                            </svg>
+                                        </div>
+                                        <div class="details">
+                                            <h5>{{ feedback.name }}</h5>
+                                            <div class="d-flex align-items-center">
+                                                <div class="stars px-1">
+                                                    {{feedback.rating|safe}}
+                                                </div>
+                                                <h6>{{ feedback.date }} </h6>
+                                            </div>
+                                            <p class="description">{{ feedback.comment }}</p>
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                        <div class="w-100 d-flex justify-content-center">
+                            <div id="see-more" class="my-3"> View all comments </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-5">
+                    <div class="bookingInformation">
+                        <div class="header d-flex justify-content-center align-items-center">
+                            <h3>Booking information</h3>
+                        </div>
+                        <div class="price d-flex flex-column justify-content-center align-items-center">
+                            <img src="{% static 'imgs/money.png' %}" alt="money">
+                            <p>Checkup:
+                                
+                                {%if doctor.doctor.price|floatformat:1 == doctor.doctor.displayed_price|floatformat:1 %}
+                                        <span></span> {{ doctor.doctor.displayed_price|floatformat:1 }}LE
+                                    {%else%}
+                                        <span>{{ doctor.doctor.price|floatformat:1  }} </span> {{ doctor.doctor.displayed_price|floatformat:1 }}LE
+                                    {%endif%}
+                                    
+                                    
+                        </div>
+                        <div class="reservationDate">
+                            <h4 class="d-flex justify-content-center align-items-center">Choose your reservation date</h4>
+                            <div class="days">
+                                <div class="swiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day1"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day2"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day3"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day4"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day5"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day6"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="day">
+                                                <div class="header text-center">
+                                                    <h5 id="day7"></h5>
+                                                </div>
+                                                <p class="time"><span>10:00 am</span></p>
+                                                <p class="time"><span>10:30 am</span></p>
+                                                <p class="time"><span>11:00 am</span></p>
+                                                <p class="time"><span>11:30 am</span></p>
+                                                <p class="time"><span>12:00 pm</span></p>
+                                                <p class="time"><span>12:30 pm</span></p>
+                                                <p class="time"><span>01:00 pm</span></p>
+                                                <p class="time"><span>01:30 pm</span></p>
+                                                <p class="time"><span>02:00 pm</span></p>
+                                                <p class="time"><span>02:30 pm</span></p>
+                                                <p class="time"><span>03:00 pm</span></p>
+                                                <p class="time"><span>03:30 pm</span></p>
+                                                <p class="time"><span>04:00 pm</span></p>
+                                                <p class="time"><span>04:30 pm</span></p>
+                                                <p class="time"><span>05:00 pm</span></p>
+                                                <p class="time"><span>05:30 pm</span></p>
+                                                <p class="time"><span>06:00 pm</span></p>
+                                                <p class="time"><span>06:30 pm</span></p>
+                                                <p class="time"><span>07:00 pm</span></p>
+                                                <p class="time"><span>07:30 pm</span></p>
+                                                <p class="time"><span>08:00 pm</span></p>
+                                                <p class="time"><span>08:30 pm</span></p>
+                                                <p class="time"><span>09:00 pm</span></p>
+                                                <p class="time"><span>09:30 pm</span></p>
+                                                <p class="time"><span>10:00 pm</span></p>
+                                                <p class="time"><span>10:30 pm</span></p>
+                                                <p class="time"><span>11:00 pm</span></p>
+                                                <p class="time"><span>11:30 pm</span></p>
+                                                <div id="more">more</div>
+            
+                                                <button type="button" class="footer text-center" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <h5>Book</h5>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-button-next arrowButton arrowButtonright"></div>
+                                    <div class="swiper-button-prev arrowButton arrowButtonleft"></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-start Footer">
+                <div class="d-flex justify-content-center align-items-center twoSections">
+                    <div class="sectionOne py-4">
+                        <div class="logo d-flex align-items-center">
+                            <img src="{% static 'imgs/logo.png' %}" alt="logo" />
+                            <h1 class="m-0">Vet<span>Hub</span></h1>
+                        </div>
+                        <p>A website for booking veterinary doctors</p>
+                        <section class="socialMedia">
+                            <h3>Social Media</h3>
+                            <section class="socialLinks d-flex justify-content-around align-items-center pt-2">
+                                    <a href="https://www.facebook.com/"><img src="{% static 'imgs/facebook.png' %}" alt="facebook"></a>
+                                    <a href="https://twitter.com/?lang=ar" ><i class="fa-brands fa-twitter"></i></a>
+                                    <a href="#"><img src="{% static 'imgs/Google.png' %}" alt="Google"></a>
+                                    <a href="https://www.linkedin.com/"><img src="{% static 'imgs/linkedin.png' %}" alt="linkedin"></a>
+                            </section>
+                        </section>
+                    </div>
+                    <div class="sectionTwo py-4">
+                        <h3>Your Pet is in safe hands</h3>
+                        <p>VetHub website first and last goal is to obtain the best and fastest way to care for your pet</p>
+                        <h3>Contact Us</h3>
+                        <form class="d-flex justify-content-center align-items-center">
+                            <input id='Massage' class='form-control' type="text" placeholder="Massage" />
+                            <div class="px-2">
+                                <button  type="submit" class='btn text-white'>Send</button>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <div class="sectionThree py-4">
+                    <h3>Get in Touch</h3>
+                    <section>
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+201222222222</span>
+                    </section>
+                    <section>
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>contact@example.com</span>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Massage Confirmation -->
+    
+    {% if request.user.is_authenticated %}
+        <form id="booking-form" method="post" action="{% url 'doctor_details' doctor.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ request.user.id }}">
+            <input type="hidden" name="user" value="{{ request.user.customer }}">
+            <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+            <input type="hidden" name="doctor_price" value="{{ doctor.doctor.price }}">
+            <input type="hidden" name="offer_percentage" value="{{ doctor.doctor.offer_percentage }}">
+            <input type="hidden" name="date" id="form-date">
+            <input type="hidden" name="time" id="form-time">
+        </form>
+
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Reservation Confirmation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="w-100 d-flex justify-content-between">
+                        <h2>Name : <span>{{request.user.name}}</span></h2>
+                    </div>
+                    <h2>Phone : <span>{{request.user.phone_number}}</span></h2>
+                    <div class="w-100 d-flex justify-content-between">
+                        <h2>Doctor : <span>{{doctor.name}}</span></h2>
+                    </div>
+                    <h2>Phone : <span>{{doctor.phone_number}}</span></h2>
+                    <h2>Booking Day : <span id="booking-date"></span></h2>
+                    <h2>Booking Time : <span id="booking-time"></span></h2>
+                    <h2>Checkup Price : <span>{{ doctor.doctor.displayed_price|floatformat:1 }} LE</span></h2>
+                    <h2>Location : <span>{{ doctor.doctor.governorate }}, {{ doctor.doctor.city }}</span></h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn submit-btn" onclick="submit_form()">Book Now</button>
+                </div>
+                </div>
+            </div>
+
+            <div class="w-100 modal-father"></div>
+        </div>
+
+    {%else%}
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">To Continue, Please Login</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{% url 'login' %}" class="btn submit-btn">Login</a>
+                </div>
+                </div>
+            </div>
+
+            <div class="w-100 modal-father"></div>
+        </div>
+    {%endif%}
+
+    <!-- Massage Confirmation -->
+    <div class="modal fade" id="staticBackdroptwo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Logout Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2>Are you sure you want to logout your account?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{% url 'logout'  %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn Delete-btn" style="background-color: #019874d0;">Logout</button>
+                </form>
+            </div>
+            </div>
+        </div>
+
+        <div class="w-100 modal-father"></div>
+    </div>
+    
+    <script>
+        for (var i = 1; i <= 7; i++) {
+            var dayElement = document.getElementById('day' + i);
+            var currentDate = new Date();
+            currentDate.setDate(currentDate.getDate() + (i - 1));
+            var formattedDate = currentDate.toLocaleDateString('en-US', { weekday: 'long', month: '2-digit', day: '2-digit' }); 
+            formattedDate = formattedDate.replace(",", "");     
+            dayElement.textContent = formattedDate;
+        }
+
+        var tempCounter = 0
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get all elements with class "time"
+            var timeElements = document.querySelectorAll('.time');
+
+            // Loop through each time element
+            timeElements.forEach(function(timeElement) {
+                // Add click event listener
+                timeElement.addEventListener('click', function() {
+                    // Get the selected time
+                    var selectedTime2 = this.querySelector('span').textContent;
+                    
+                    var parentDiv = timeElement.parentNode;
+                    var h5Element = parentDiv.querySelector('h5');
+                    // Get the text content of the h5 element
+                    var selectedDate2 = h5Element.textContent
+
+
+                    // Output the text content
+                    document.getElementById('booking-date').textContent = selectedDate2;
+                    document.getElementById('form-date').value = selectedDate2;
+
+                    // Update the content of the h2 element
+                    document.getElementById('booking-time').textContent = selectedTime2;
+                    document.getElementById('form-time').value = selectedTime2;
+                });
+
+                tempCounter += 1
+                var selectedTime = timeElement.querySelector('span').textContent;
+                var parentDiv = timeElement.parentNode;
+                var h5Element = parentDiv.querySelector('h5');
+                var selectedDate = h5Element.textContent
+
+                if (tempCounter < 27){
+                    //console.log(tempCounter)
+
+                    function isTimePassed(timeStr) {
+                        // Get the current time
+                        var currentTime = new Date();
+                        
+                        // Parse the input time string into a Date object
+                        var timeParts = timeStr.split(':');
+                        var hour = parseInt(timeParts[0]);
+                        var minutes = parseInt(timeParts[1].split(' ')[0]);
+                        var isPM = timeParts[1].split(' ')[1].toLowerCase() === 'pm';
+                        if (isPM && hour !== 12) {
+                            hour += 12;
+                        }
+                        var inputTime = new Date();
+                        inputTime.setHours(hour);
+                        inputTime.setMinutes(minutes);
+                        inputTime.setSeconds(0);
+
+                        // Check if the input time has passed
+                        return inputTime < currentTime;
+                    }
+
+                    //)
+                    //isTimePassed(selectedTime)
+
+                    if (isTimePassed(selectedTime)) {
+                        timeElement.classList.add('booked')
+                    } 
+
+                }
+
+                var temp={"time":selectedTime,"date":selectedDate}
+                var appointments = {{ appointments|safe }};
+
+                var foundBookedTime = appointments.find(function(temp2) {
+                    return temp2.time === temp.time && temp.date === temp2.date;
+                });
+
+                if (foundBookedTime) {
+                    //console.log(foundBookedTime);
+                    timeElement.classList.add('booked')
+                } 
+            });
+
+        });
+
+        function submit_form(){
+            document.getElementById("booking-form").submit()
+        }
+
+
+
+    </script>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Swiper JS -->
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/index7.js' %}"></script>
+</body>
+</html>

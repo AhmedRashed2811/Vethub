@@ -1,0 +1,923 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Panel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="{% static 'imgs/logo.png' %}" type="image/x-icon">
+        <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <!-- Swiper CSS -->
+        <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style20.css' %}">
+    </head>
+
+</head>
+<body style="background-color: #F5F6F8;">
+
+
+<!-- Side Bar -->
+<div class="sideBar d-flex">
+
+    <div class="sideBarBody  d-flex flex-column justify-content-between vh-100 py-4">
+        <div>
+            <h1>Admin<span>Panal</span></h1>
+            <div class="links overflow-hidden d-flex flex-column">
+                <a class="py-2 position-relative text-white text-decoration-none active" sectionName="Dashboard">
+                    <img src="{% static 'imgs/dashboard.png' %}" alt="dashboard">
+                    Business Dashboard
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="Customers">
+                    <img src="{% static 'imgs/Customers-Data.png' %}" alt="Customers Data">
+                    Customers Data
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="Doctors">
+                    <img src="{% static 'imgs/Doctor-Data.png' %}" alt="Doctors Data">
+                    Doctors Data
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="Appointments">
+                    <img src="{% static 'imgs/Appointments.png' %}" alt="Appointments">
+                    Appointments
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="InappropriateReviews">
+                    <img src="{% static 'imgs/Inappropriate-Reviews.png' %}" alt="Inappropriate Reviews">
+                    Inappropriate Reviews
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="ManageNews">
+                    <img src="{% static 'imgs/Manage-News.png' %}" alt="Manage News">
+                    Manage News
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="Support">
+                    <img src="{% static 'imgs/Customer-Support.png' %}" alt="Customer Support">
+                    Customer Support
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="Verification">
+                    <img src="{% static 'imgs/Doctor-Verification.png' %}" alt="Doctor's Verification">
+                    Doctor's Verification
+                </a>
+                <a class="py-2 position-relative text-white text-decoration-none" sectionName="NewAdmin">
+                    <img src="{% static 'imgs/New-Admin.png' %}" alt="Create New Admin">
+                    Create New Admin
+                </a>
+            </div>
+        </div>
+        <div class="px-4 d-flex justify-content-center">
+            <a href="{% url 'logout' %}" class="logout">Log out</a>
+        </div>
+    </div>
+
+    <div class="sideBarHeader h-100 d-flex flex-column justify-content-between py-4 text-center px-2 bg-white text-black">
+        <a href="{% url 'index' %}"><img src="{% static 'imgs/logo.png' %}" alt="logo"></a>
+        <i class="fa-solid open-close-icon fa-x fa-2x"></i>
+        <div>
+            <i class="fa-solid fa-globe d-block"></i>
+        </div>
+    </div>
+
+    
+</div>
+
+<div class="AdminBody"> 
+        
+    <!-- Business Dashboard -->
+    <section id="Dashboard" class="Dashboard">
+    
+    </section> 
+
+    <!-- Customers Data -->
+    <section id="Customers" class="customersData">
+        <div class="d-flex justify-content-center align-items-center"> 
+            <div class="row mx-0 py-4">
+                <div class="col-md-6">
+                    <form>
+                        <input type="text" class="searchInput form-control bg-transparent" placeholder="Search By Name" onkeyup="searchByName(this, 'Customers')" >
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form>
+                        <input type="text" class="searchInput form-control bg-transparent" placeholder="Search By Phone Number" onkeyup="searchByPhoneNumber(this)" >
+                    </form>
+                </div>
+
+            </div>
+            <button class="sort" id="sort-customers" onclick="sortCustomersByNumberOfAppointments()">Sort</button>
+        </div>
+
+        <div class="body">
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Appointments</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </thead>
+                        <tbody>
+                            {% for customer in customers %}
+                                <tr>
+                                    <td>{{customer.user.id }}</td>
+                                    <td>{{customer.user.name }}</td>
+                                    <td>{{customer.user.email }}</td>
+                                    <td>{{customer.user.phone_number }}</td>
+                                    <td>{{customer.appointments_count }}</td>
+                                    <td>
+                                        <form action="{% url 'edit_customer' customer.user.id %}" action="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="the_customer_id" value="{{customer.user.id}}">
+                                            <!-- <button id="update1" type="submit" class="update" data-customer-id="{{ customer.user.id }}">Update</button> -->
+                                            <button id="update1" type="submit" class="update">Update</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- <button class="delete-button1" data-customer-id="{{ customer.user.id }}">Delete</button> -->
+                                        <button type="button" class="btn delete mx-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop-{{customer.user.id}}">
+                                            Delete
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Massage Confirmation -->
+
+                                    <div class="modal fade" id="staticBackdrop-{{customer.user.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h2>Are you sure you want delete "{{customer.user.name}}" Account?</h2>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{% url 'delete_account' customer.user.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn Delete-btn">Delete</button>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-100 modal-father"></div>
+                                    </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Doctors Data -->
+    <section id="Doctors" class="doctorsData">
+        <div class="d-flex justify-content-center align-items-center"> 
+            <div class="row mx-0 py-4">
+                <div class="col-md-6">
+                    <form>
+                        <input type="text" class="searchInput form-control bg-transparent" placeholder="Search By Name" onkeyup="searchByName(this, 'Doctors')" >
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <form>
+                        <input type="text" class="searchInput form-control bg-transparent" placeholder="Search By Phone Number" onkeyup="searchByPhoneNumber2(this, 'Doctors')" >
+                    </form>
+                </div>
+
+            </div>
+            <button class="sort">Sort</button>
+        </div>
+
+        <div class="body">
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>City</th>
+                            <th>Area</th>
+                            <th>Appointments</th>
+                            <th>Update</th>
+                            <th>Delete</th>
+                        </thead>
+                        <tbody>
+
+                            {% for doctor in doctors %}
+                                <tr>
+                                    <td>{{ doctor.user.id }}</td>
+                                    <td>{{ doctor.user.name }}</td>
+                                    <td>{{ doctor.user.email }}</td>
+                                    <td>{{ doctor.user.phone_number }}</td>
+                                    <td>{{ doctor.governorate }}</td>
+                                    <td>{{ doctor.city }}</td>
+                                    <td>{{ doctor.appointments_count }}</td>
+                                    <td>
+                                        <form action="{% url 'edit_doctor' doctor.user.id %}" action="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="the_doctor_id" value="{{doctor.user.id}}">
+                                            <!-- <button id="update1" type="submit" class="update" data-customer-id="{{ customer.user.id }}">Update</button> -->
+                                            <button id="update1" type="submit" class="update">Update</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- <button class="delete-button1" data-customer-id="{{ customer.user.id }}">Delete</button> -->
+                                        <button type="button" class="btn delete mx-2" data-bs-toggle="modal" data-bs-target="#DeleteDoctor-{{doctor.user.id}}">
+                                            Delete
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                                                    
+                                <!-- Massage Confirmation for Delete Doctor -->
+                                
+                                <div class="modal fade" id="DeleteDoctor-{{doctor.user.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Confirmation</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h2>Are you sure you want delete Dr. "{{doctor.user.name}}" Account?</h2>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form action="{% url 'delete_account' doctor.user.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn Delete-btn">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 modal-father"></div>
+                                </div>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Appointments -->
+    <section id="Appointments" class="appointments">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="row mx-0 py-4">
+                <div class="col-md-12">
+                    <form>
+                        <input type="text" class="searchInput form-control bg-transparent" placeholder="Search by Doctor Name" onkeyup="searchByName(this, 'Appointments')" >
+                    </form>
+                </div>
+            </div>
+            <button class="sort" id="appointments-sort" onclick="sortAppointmentsByPrice()">Sort</button>
+        </div>
+
+        <div class="body">
+            <div class="outer-wrapper">
+                <div class="table-wrapper">
+                    <table id="customers-table">
+                        <thead>
+                            <th>Doctor ID</th>
+                            <th>Doctor Name</th>
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Customer Phone</th>
+                            <th>Price</th>
+                            <th>Day</th>
+                            <th>Time</th>
+                        </thead>
+                        <tbody>
+
+                        {% for appointment in appointments%}
+                            <tr>
+                                <td><a href="{% url 'doctor_details' appointment.doctor.user.id %}" style="text-decoration: none; color:#019874">{{ appointment.doctor.user.id  }}</a></td>
+                                <td>{{appointment.doctor.user.name  }} </td>
+
+                                {% if appointment.offline_customer_name %}
+                                    <td>Offline</td>
+                                {% else %}
+                                    <td>{{ appointment.customer.user.id }}</td>
+                                {% endif %}
+
+                                {% if appointment.offline_customer_phone %}
+                                    <td>{{ appointment.offline_customer_name}}</td>
+                                {% else %}
+                                    <td>{{ appointment.customer.user.name }}</td>
+                                {% endif %}
+
+                                {% if appointment.offline_customer_phone %}
+                                    <td>{{ appointment.offline_customer_phone}}</td>
+                                {% else %}
+                                    <td>{{ appointment.customer.user.phone_number }}</td>
+                                {% endif %}
+
+                                
+                                <td>{{ appointment.appointment_price }}</td>
+                                <td>{{ appointment.date}}</td>
+                                <td>{{ appointment.time }}</td>
+                            </tr>
+                        {% endfor %}
+                                
+                                
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inappropriate Reviews -->
+    <section id="InappropriateReviews" class="inappropriateReviews">
+    </section>
+
+    <!-- Manage News -->
+    <section id="ManageNews" class="manageNews">
+    </section>
+
+    <!-- Customer Support -->
+    <section id="Support" class="Support">
+    </section>
+
+    <!-- Doctor's Verification -->
+    <section id="Verification" class="DoctorVerification">
+    </section>
+
+    <!-- Create New Admin -->
+    <section id="NewAdmin" class="newAdmin">
+        <div class="vh-100 p-3 d-flex justify-content-center align-items-center">
+            <div class="createBody">
+                <h1>New Admin</h1>
+                <form id="create-admin-form" method="post" action="{% url 'admin_register'%}">
+                    {% csrf_token %}
+                    <div class="form-group pb-4 d-flex justify-content-center">
+                        <label class="m-auto" for="Name">Name</label>
+                        <input class="form-control" type="text" id="Name" placeholder="Enter Admin Name" name="name">
+                    </div>
+                    <p id="name-error" style="color:red"></p>
+                    <div class="form-group pb-4 d-flex justify-content-center">
+                        <label class="m-auto" for="Email">Email</label>
+                        <input class="form-control" type="email" id="Email" placeholder="Enter Admin email" name="email">
+                    </div>
+                    <p id="email-error" style="color:red"></p>
+                    <div class="form-group pb-4 d-flex justify-content-center">
+                        <label class="m-auto" for="Email">Phone</label>
+                        <input class="form-control" type="text" id="PhoneNumber" placeholder="Enter Admin Phone" name="phoneNumber">
+                    </div>
+                    <p id="phone-error" style="color:red"></p>
+                    <div class="form-group d-flex justify-content-center align-items-center">
+                        <label for="password">Password</label>
+                        <div class="password-input">
+                            <input id="password" type="password" class="form-control" id="password" name="password">
+                            <span class="toggle-password" onclick="togglePassword()"></span>
+                            <!-- <span class="toggle-password no-drop"> </span> -->
+                        </div>
+                    </div>
+                    <p id="password1-error" style="color:red"></p>
+                    <div class="w-100 d-flex justify-content-end pt-4">
+                        <button type="button" onclick="admin_register()">Create</button>
+                    </div>
+                    <p id="signup-error" style="color:red"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    
+
+</div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Swiper JS -->
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/index6.js' %}"></script>
+        
+    <script>
+        function openSidebar() {
+            const sideBar = document.querySelector(".sideBar");
+            const customersData = document.querySelector("body .AdminBody");
+            const openCloseIcon = document.querySelector(".open-close-icon");
+            const links = document.querySelectorAll(".links a");
+
+            sideBar.style.transition = "left 500ms ease";
+            sideBar.style.left = "0";
+            customersData.classList.add("maLeft")
+
+            openCloseIcon.classList.remove("fa-align-justify");
+            openCloseIcon.classList.add("fa-x");
+
+            links.forEach((link, index) => {
+                setTimeout(() => {
+                    link.style.transition = `top ${(index + 5) * 100}ms ease`;
+                    link.style.top = "0";
+                }, 0);
+            });
+        }
+
+        function closeSidebar() {
+            const sideBar = document.querySelector(".sideBar");
+            const customersData = document.querySelector("body .AdminBody");
+            const openCloseIcon = document.querySelector(".open-close-icon");
+            const links = document.querySelectorAll(".links a");
+
+            const sideBarBodyWidth = document.querySelector(".sideBarBody").offsetWidth;
+            sideBar.style.transition = "left 500ms ease";
+            if (sideBarBodyWidth < 240) {
+                sideBar.style.left = `-240px`;
+            }else{
+                sideBar.style.left = `-${sideBarBodyWidth}px`;
+            }
+            customersData.classList.remove("maLeft")
+
+            openCloseIcon.classList.add("fa-align-justify");
+            openCloseIcon.classList.remove("fa-x");
+
+            links.forEach((link) => {
+                link.style.transition = "top 500ms ease";
+                link.style.top = "300px";
+            });
+        }
+
+        document.querySelector(".sideBarHeader .open-close-icon").addEventListener("click", () => {
+            const sideBarLeft = document.querySelector(".sideBar").style.left;
+            if (sideBarLeft === "0px") {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+        
+        closeSidebar();
+
+        function searchByName(input, sectionId) {
+            var filter, table, tr, td, i, txtValue;
+            filter = input.value.toUpperCase();
+            table = document.querySelector(`#${sectionId} table`);
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    // Check if the word starts with the entered letters
+                    if (txtValue.toUpperCase().startsWith(filter)) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function searchByPhoneNumber(input) {
+            input.value = input.value.replace(/\D/g, '');            
+            var filter = input.value;
+            var table = document.querySelector("table");
+            var tr = table.getElementsByTagName("tr");
+            
+            for (var i = 0; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td")[3]; 
+                if (td) {
+                    var phoneNumber = td.textContent || td.innerText;                    
+                    // Check if the number starts with the entered digits
+                    if (phoneNumber.startsWith(filter)) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function searchByPhoneNumber2(input,sectionId) {
+            input.value = input.value.replace(/\D/g, '');            
+            var filter = input.value;
+            var table = document.querySelector(`#${sectionId} table`); 
+            var tr = table.getElementsByTagName("tr");
+            
+            for (var i = 0; i < tr.length; i++) {
+                var td = tr[i].getElementsByTagName("td")[3]; 
+                if (td) {
+                    var phoneNumber = td.textContent || td.innerText;                    
+                    if (phoneNumber.startsWith(filter)) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        document.querySelectorAll("body .sideBarBody .links a").forEach(link => {
+            link.addEventListener("click", function(event) {
+                event.preventDefault();
+                const sectionId = this.getAttribute("sectionName");
+                const sections = document.querySelectorAll("section");
+                const activeLink = document.querySelector(".links a.active");
+                const selectedSection = document.getElementById(sectionId);                
+                sections.forEach(section => {
+                    section.classList.remove("show");
+                });
+                selectedSection.classList.add("show");
+                if (activeLink) {
+                    activeLink.classList.remove("active");
+                }
+                this.classList.add("active");
+            });
+        });
+
+
+        function sortAppointmentsByPriceDescending() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("customers-table");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = parseFloat(rows[i].getElementsByTagName("td")[5].innerText);
+                    y = parseFloat(rows[i + 1].getElementsByTagName("td")[5].innerText);
+                    if (x < y) { // Compare in reverse order for descending sorting
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+
+        document.getElementById("appointments-sort").addEventListener("click", function() {
+            sortAppointmentsByPriceDescending();
+        });
+
+        function sortCustomersByNumberOfAppointments() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.querySelector("#Customers table");
+            switching = true;
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < rows.length - 1; i++) {
+                    shouldSwitch = false;
+                    x = parseInt(rows[i].getElementsByTagName("td")[4].innerText);
+                    y = parseInt(rows[i + 1].getElementsByTagName("td")[4].innerText);
+                    if (x < y) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+
+        function checkName(name){
+                const onlyLettersRegex = /^[a-zA-Z\s]+$/;
+                if (onlyLettersRegex.test(name) == false) {return ("Name Contains Invalid Characters");} 
+
+                const atLeastTwoWordsRegex = /^[a-zA-Z]+(?:\s+[a-zA-Z]+)+$/;
+                if (atLeastTwoWordsRegex.test(name) == false) {return ("Name Must Have at Least 2 Names");} 
+                
+                return true
+            }
+
+        function checkPhoneNumber(phoneNumber){
+            const onlyLettersRegex = /01(0|1|2|5)[0-9]{8}$/;
+            if (onlyLettersRegex.test(phoneNumber) == false) {return ("Phone Number Must Be in Format '01**********'");} 
+            return true
+        }
+
+        function checkEmail(email){
+            const onlyLettersRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;;
+            if (onlyLettersRegex.test(email) == false) {return ("Email Not Valid");} 
+            return true
+        }
+
+        function checkPaasword(password){
+            const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*\d)(?=.*[A-Z]).{8,}$/;
+            if (passwordRegex.test(password) == false) {return ("Password Not Valid; it must be at least 8 characters with 1 number, 1 {@,$,?,!,.} and 1 capital letter");} 
+            return true
+        }
+
+        function admin_register(){
+            var allGood = true
+            document.getElementById("phone-error").innerHTML = ""
+            document.getElementById("name-error").innerHTML = ""
+            document.getElementById("email-error").innerHTML= ""
+            document.getElementById("password1-error").innerHTML = ""
+            var name = document.getElementById("Name").value
+            var phone_number = document.getElementById("PhoneNumber").value
+            var email = document.getElementById("Email").value
+            var password1 = document.getElementById("password").value
+
+            if (name == "" || phone_number == "" || email == "" || password1 =="" || password2 == ""){
+                document.getElementById("signup-error").innerHTML = "Please Fill All Fields"
+                allGood = false
+            }
+
+            if(checkName(name) != true){
+                document.getElementById("name-error").innerHTML = checkName(name)
+                allGood = false
+            }
+
+            if(checkPhoneNumber(phone_number) != true){
+                document.getElementById("phone-error").innerHTML = checkPhoneNumber(phone_number)
+                allGood = false
+            }
+
+            if(checkEmail(email) != true){
+                document.getElementById("email-error").innerHTML = checkEmail(email)
+                allGood = false
+            }
+
+            if(checkPaasword(password1) != true){
+                document.getElementById("password1-error").innerHTML = checkPaasword(password1)
+                allGood = false
+            }
+
+
+            if(allGood == true){document.getElementById("create-admin-form").submit()}
+
+        }
+    
+    </script>
+
+
+
+<!-- <h1>Doctor Verifications</h1>
+    <div>
+        <a  href="{% url 'verify_doctors' %}" class="button admin-signup-btn">Doctor Verifications</a>
+    </div> 
+-->
+
+
+<!-- 
+
+    <h1>Create New Admin</h1>
+    <div>
+        <a  href="{% url 'admin_register' %}" class="button admin-signup-btn">Admin SignUp</a>
+    </div>
+
+    <h1>Manage News</h1>
+    <div>
+        <a  href="{% url 'manage_news' %}" class="button admin-signup-btn">Manage News</a>
+    </div>
+
+    
+
+    <h1>Inappropriate Reviews</h1>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Doctor Name</th>
+                    <th>Date</th>
+                    <th>Comment</th>
+                    <th>Delete Review</th>
+                    <th>Delete Customer</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in inappropriate_reviews %}
+                    <tr>
+                        <td>{{ review.customer.user.name }}</td> 
+                        <td>{{ review.doctor.user.name }}</td> 
+                        <td>{{ review.date }}</td> 
+                        <td>{{ review.comment }}</td> 
+                        <td><button class="delete-button-review" data-review-id="{{ review.id }}">Delete Review</button></td>
+                        <td><button class="delete-button" data-customer-id="{{ review.customer.user.id }}">Delete Customer</button></td>
+                        
+                    </tr>
+
+                    <div id="deleteModal" class="modal">
+                        <div class="modal-content">
+                            <h2>Delete Customer</h2>
+                            <p>Are you sure you want to delete this customer?</p>
+                            <form id="deleteForm" method="post" action="">
+                                {% csrf_token %}
+                                <input type="hidden" id="deleteCustomerId" name="customer_id">
+                                <button type="submit" class="confirm-button" id="confirmDelete">Yes</button>
+                                <button type="button" class="cancel-button" id="cancelDelete">No</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="deleteModalReview" class="modal-review">
+                        <div class="modal-content-review">
+                            <h2>Delete Review</h2>
+                            <p>Are you sure you want to delete this review?</p>
+                            <form id="deleteFormReview" method="post" action="" class="status-form'">
+                                {% csrf_token %}
+                                <input type="hidden" id="deleteReviewId" name="review_id">
+                                <button type="submit" class="confirm-button" id="confirmDeleteReview" onclick="refreshPage()">Yes</button>
+                                <button type="button" class="cancel-button closeModal" id="cancelDeleteReview">No</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h1>Customer Support</h1>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for message in supportTeamMessages%}
+                <tr>
+                    <td>{{ message.customer.user.name }}</td>
+                    <td>{{ message.message }}</td>
+                    <td>{{ message.date }}</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_message' message.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-button" >Delete</button>
+                        </form>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> -->
+
+<!-- 
+    <script>
+
+        // Get the modals
+        var updateModal = document.getElementById('updateModal');
+        var deleteModal = document.getElementById('deleteModal');
+        var deleteDoctorModal = document.getElementById('deleteModalDoctor');
+        var deleteReviewModal = document.getElementById('deleteModalReview');
+        
+        var UpdateModal = document.getElementById('updateModal')
+        // When the user clicks anywhere outside of the modals, close them
+        window.onclick = function(event) {
+            if (event.target == UpdateModal) {
+                UpdateModal.style.display = 'none';
+            }
+            if (event.target == deleteModal) {
+                deleteModal.style.display = 'none';
+            }
+            if (event.target == deleteModalDoctor) {
+                deleteModalDoctor.style.display = 'none';
+            }
+            if (event.target == deleteModalReview) {
+                deleteModalReview.style.display = 'none';
+            }
+        };
+
+        var update_button1 = document.querySelectorAll(".update-button1")
+        update_button1.forEach(function(button){
+            button.addEventListener('click', function() {
+            var customerId = button.getAttribute('data-customer-id');
+            var customerName = button.parentElement.parentElement.cells[0].textContent;
+            var customerEmail = button.parentElement.parentElement.cells[1].textContent;
+            var customerPhone = button.parentElement.parentElement.cells[2].textContent;
+
+            document.getElementById('customerId').value = customerId;
+            document.getElementById('name').value = customerName;
+            document.getElementById('email').value = customerEmail;
+            document.getElementById('phone').value = customerPhone;
+
+            if(customerId){
+                document.getElementById('updateForm').action = '/edit_customer/' + customerId + '/';
+            }
+
+            updateModal.style.display = 'block';
+        });
+        })
+        
+
+
+        var delete_button1 = document.querySelectorAll('.delete-button1')
+        delete_button1.forEach(function(button){
+            button.addEventListener('click', function() {
+                var customerId = button.getAttribute('data-customer-id');
+                document.getElementById('deleteCustomerId').value = customerId;
+
+                document.getElementById('deleteForm').action = '/delete_account/' + customerId + '/';
+
+                deleteModal.style.display = 'block';
+            });
+        })
+        
+    
+
+
+        // Get the button that opens the modals
+        var updateButtons = document.querySelectorAll('.update-button');
+
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        var deleteButtonsDoctor = document.querySelectorAll('.delete-button-doctor');
+        var deleteButtonsReview = document.querySelectorAll('.delete-button-review');
+
+        // Get the <span> element that closes the modals
+        var closeUpdateModal = document.querySelector('#updateModal .close');
+        var closeDeleteModal = document.querySelector('#deleteModal .close');
+        var closeDeleteModal = document.querySelector('#deleteModalDoctor .close');
+
+
+        // Get the <button> elements to close the modals
+        var closeModalButtons = document.querySelectorAll('.closeModal');
+        var cancelDeleteButton = document.getElementById('cancelDelete');
+        var cancelDeleteDoctorButton = document.getElementById('cancelDeleteDoctor');
+
+        document.getElementById('cancelDelete').addEventListener('click', function() {
+            deleteModal.style.display = 'none';
+        });
+
+        document.getElementById('cancel_update').addEventListener('click', function() {
+            updateModal.style.display = 'none';
+        });
+
+        document.getElementById('close_update1').addEventListener('click', function() {
+            updateModal.style.display = 'none';
+        });
+
+        document.getElementById('cancelDeleteDoctor').addEventListener('click', function() {
+            deleteModalDoctor.style.display = 'none';
+        });
+
+
+
+        // When the user clicks the update button, open the update modal and fill the form fields
+
+        // When the user clicks the delete button, open the delete modal
+        deleteButtonsDoctor.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var doctorId = button.getAttribute('data-doctor-id');
+                document.getElementById('deleteDoctorId').value = doctorId;
+
+                document.getElementById('deleteFormDoctor').action = '/delete_account/' + doctorId + '/';
+
+                deleteDoctorModal.style.display = 'block';
+            });
+        });
+
+        // When the user clicks the delete button, open the delete modal
+        deleteButtonsReview.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var reviewId = button.getAttribute('data-review-id');
+                document.getElementById('deleteReviewId').value = reviewId;
+
+                document.getElementById('deleteFormReview').action = '/delete_review/' + reviewId + '/';
+
+                deleteReviewModal.style.display = 'block';
+            });
+        });
+
+        
+
+        // When the user clicks the confirm delete button, submit the delete form
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            document.getElementById('deleteForm').submit();
+        });
+
+        document.getElementById('confirmDeleteDoctor').addEventListener('click', function() {
+            document.getElementById('deleteForm').submit();
+        });
+
+        document.getElementById('confirmDeleteReview').addEventListener('click', function() {
+            document.getElementById('deleteFormReview').submit();
+        });
+
+
+
+        
+
+    </script>
+-->
+
+</body>
+</html>

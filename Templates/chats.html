@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chats</title>
+    <style>
+        /* chats.css */
+        .chat-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 10px; /* Add padding for better spacing */
+            border: 1px solid #ccc; /* Add border with color */
+            border-radius: 5px; /* Add border radius for rounded corners */
+        }
+        .chat-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow: hidden; /* Ensure child elements don't overflow */
+            position: relative; /* Position relative for ::after pseudo-element */
+        }
+
+        .chat-message::after {
+            content: ''; /* Add content */
+            display: block; /* Display as block */
+            position: absolute; /* Position absolute */
+            bottom: 0; /* Align at bottom */
+            left: 0; /* Align at left */
+            width: 100%; /* Full width */
+            height: 1px; /* Line height */
+            background-color: #ccc; /* Line color */
+            margin-top: 10px; /* Add margin to separate the line */
+        }
+
+    .doctor-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333; /* Ensure doctor name is visible */
+        }
+
+    .message {
+        color: #333;
+        }
+
+    .image-container {
+        float: left; /* Float the image container to the left */
+        margin-right: 20px; /* Add some margin between the image and paragraph */
+    }
+
+    .image-container img {
+        max-width: 100%; /* Ensure the image doesn't exceed its container */
+    }
+
+    .paragraph-container {
+        overflow: hidden; /* Clear the float */
+    }
+    
+    .open-chat-button {
+        position: absolute; /* Position the button relative to the viewport */
+        bottom: 20px; /* Adjust as needed */
+        right: 20px; /* Adjust as needed */
+        padding: 10px 20px; /* Adjust padding as needed */
+        background-color: #007bff; /* Button background color */
+        color: #fff; /* Text color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1000; /* Ensure button is above other content */
+    }
+
+    /* Style for the open chat button on hover */
+    .open-chat-button:hover {
+        background-color: #0056b3; /* Darker background color on hover */
+    }
+
+    </style>
+</head>
+<body>
+    
+    <h1>My Chats</h1>
+
+    <div>
+
+        <p>@ {{request.user.name}} </p>
+    </div>
+
+
+    <div class="chat-container">
+        <!-- Chat messages will be dynamically populated here -->
+        
+
+
+        {% for group_for in request.user.groups.all %}
+            {% if group_for.name == 'Doctors' %}
+            {% for chat in chats %}
+            <div class="chat-message">
+                <div class="image-container">
+                    <img src="{% static 'l60Hf.png' %}" alt="Profile Picture" width="100px" class="profile-picture">
+                </div>
+                <div class="paragraph-container">
+                    <p class="doctor-name"> {{ chat.customer.user.name }}</p>
+                <!-- <div class="message">{{ chat.message }}</div> -->
+                <a href="{% url 'chat_details' chat.customer.user.id %}" class="open-chat-button">Open Chat</a>
+                </div>
+            </div>
+                {% endfor %}
+        
+            {% elif group_for.name == 'Customers' %}
+                {% for chat in chats %}
+                <div class="chat-message">
+                    <div class="image-container">
+                        <img src="{{ chat.doctor.profile_photo.url }}" width="100px" alt="{{ doctor.user.name }}">
+                    </div>
+                    <div class="paragraph-container">
+                        <p class="doctor-name"> {{ chat.doctor.user.name }}</p>
+                    <!-- <div class="message">{{ chat.message }}</div> -->
+                    </div>
+                    <a href="{% url 'chat_details' chat.doctor.user.id %}" class="open-chat-button">Open Chat</a>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+        {% endfor %}
+
+
+    </div>
+
+
+</body>
+</html>
